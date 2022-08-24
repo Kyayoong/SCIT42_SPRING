@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.table').css('text-align', 'center');
+	$('.title').css('width', '500px');
+	$('.container').css('border', '1px solid black');
+	$('.container').css('width', '650px');
+})
+
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>[ 판매 상품 검색 ]</h1>
+	
+	<form id="pagingForm" th:action="@{/board/list}" method="get">
+			<input type="hidden" name="page" id="page">
+					
+			<select name="type" id="type">
+				<option value="전체" th:selected="${type} == 'all'">전체</option>
+				<option value="컴퓨터 밎 주변기기" th:selected="${type} == 'computer'">컴퓨터 및 주변기기</option>
+				<option value="카메라" th:selected="${type} == 'camera'">카메라</option>
+				<option value="자동차" th:selected="${type} == 'car'">자동차</option>
+			</select>
+			<input type="text" name="searchWord" th:value="${searchWord}"> <!-- 검색 했을 때, 검색어 남기기. -->
+		</form>
+	
+	<table class="table">
+		<tr>
+			<th>번호</th>
+			<th>카테고리</th>
+			<th class="title">제목</th>
+		</tr>
+		<tr>
+			<td>번호</td>
+			<td>카테고리</td>
+			<td class="title">글 제목</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

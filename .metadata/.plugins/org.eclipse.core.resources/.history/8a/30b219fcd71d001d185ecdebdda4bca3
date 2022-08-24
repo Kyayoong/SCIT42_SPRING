@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('*').css('margin', '0 auto');
+    $('#formButton1').click(formSubmit1);
+    $('#formButton2').click(formSubmit2);
+    $('#formButton3').click(formSubmit3);
+    $('#bt1').click(getObject1);
+    $('#bt2').click(getObject2);
+    $('#bt3').click(getObject3);
+})
+
+//writeForm1에서 버튼을 눌렀을 때, 파라미터로 각 값을 보내기
+function formSubmit1(){
+    // val은 input tag에 입력된 value값
+    let n = $('#name').val();
+    let age = $('#age').val();
+    let phone = $('#phone').val();
+
+    if(n == '' || age == '' || phone == ''){
+        alert('정보를 올바르게 입력하세요');
+        return;
+    }
+    if(isNaN(age) || isNaN(phone)){
+        alert('형식(나이:숫자, 전화번호:숫자)에 맞게 입력하세요');
+        return;
+    }
+
+    $.ajax({
+        url: 'insert1',
+        type: 'post',
+        data: {name: n, age: age, phone: phone},
+        success: function(){
+            alert('저장되었습니다.');
+            /* 입력하고 나면 그 화면은 필요없는데, ajax로 쓰는 이유는... 연속적으로 입력하기 위함... 때문에 모든 칸을 지워줘야한다.
+             * val('')은 value값을 ''로 초기화시켜준다.
+             */
+            let n = $('#name').val('');
+            let age = $('#age').val('');
+            let phone = $('#phone').val('');
+        },
+        error: function(e){
+            alert('저장 실패!');
+            alert(JSON.stringify(e));
+        }
+    })
+}
+
+//writeForm2에서 버튼을 눌렀을 때, 파라미터로 객체를 보내기
+function formSubmit2(){
+	 // val은 input tag에 입력된 value값
+    let n = $('#name2').val();
+    let age = $('#age2').val();
+    let phone = $('#phone2').val();
+
+    if(n == '' || age == '' || phone == ''){
+        alert('정보를 올바르게 입력하세요');
+        return;
+    }
+    if(isNaN(age) || isNaN(phone)){
+        alert('형식(나이:숫자, 전화번호:숫자)에 맞게 입력하세요');
+        return;
+    }
+
+    $.ajax({
+        url: 'insert2',
+        type: 'post',
+        data: {name: n, age: age, phone: phone},
+        success: function(){
+            alert('저장되었습니다.');
+            let n = $('#name2').val('');
+            let age = $('#age2').val('0');
+            let phone = $('#phone2').val('');
+        },
+        error: function(e){
+            alert('저장 실패!');
+            alert(JSON.stringify(e));
+        }
+    })
+}
+
+//writeForm3에서 버튼을 눌렀을 때, 폼 자체를 보내기
+function formSubmit3(){
+    $.ajax({
+        url: 'insert3',
+        type: 'post',
+        /* serialize()는 폼 안에 name이 달린 놈들을 객체화하여 한번에 정리해준다. */
+        data: $('#writeForm3').serialize(),
+        success: function(){
+            alert('저장되었습니다.');
+            let n = $('#name3').val('');
+            let age = $('#age3').val('0');
+            let phone = $('#phone3').val('');
+        },
+        error: function(e){
+            alert('저장 실패!');
+            alert(JSON.stringify(e));
+        }
+    })
+}
+
+//서버에서 객체 string으로 받아오기
+/* 문제점은 문자열로 받기 때문에 데이터들이 통합되어버려 실사용이 어렵다. 간단히 디버깅단계에서 데이터를 보기 위해 사용할 때만 쓸만하다. */
+function getObject1(){
+    $.ajax({
+        url: 'getObject1',
+        type: 'get',
+        
+        /* controller로부터 넘어온 p객체를 ob라는 text타입으로 받는다. */
+        dataType: 'text',
+        success: function(ob){
+            $('#output1').html(ob);
+        },
+        error: function(e){
+            alert(JSON.stringify(e));
+        }
+    })
+}
+//서버에서 객체 json으로 받아오기
+/* 실제로 데이터를 활용할 때에는 JSON을 사용한다. 객체의 각 요소를 바로 참조하기에 용이하다. */
+function getObject2(){
+	$.ajax({
+        url: 'getObject2',
+        type: 'get',
+        
+        /* controller로부터 넘어온 p객체를 ob라는 json타입으로 받는다. */
+        dataType: 'json',
+        success: function(ob){
+            /* $('#output2').html(ob.name + ', ' + ob.age + ', ' + ob.phone); */
+            let s ='<p>' + ob.name + '</p>';
+            s += '<p>' + ob.age + '</p>';
+            s += '<p>' + ob.phone + '</p>';
+            
+            $('#output2').html(s);
+        },
+        error: function(e){
+            alert(JSON.stringify(e));
+        }
+    })
+}
+//[번외예제1] 서버에서 객체리스트를 json으로 받아 테이블에 표기하기
+function getObject3(){
+	$.ajax({
+        url: 'getList',
+        type: 'get',
+        
+        /* controller로부터 넘어온 p객체를 ob라는 json타입으로 받는다. */
+        dataType: 'json',
+        success: function(ob){
+           let t = '<table style="border: 1px solid black; margin: 0 auto;">'
+           for(let i = 0; i < ob.length; ++i){
+                t += '<tr>'
+                t += '<td>' + ob[i].name + '</td>'
+                t += '<td>' + ob[i].age + '</td>'
+                t += '<td>' + ob[i].phone + '</td>'
+                t += '</tr>'
+           }
+           t += '</table>'
+
+           $('#output3').html(t);
+        },
+        error: function(e){
+            alert(JSON.stringify(e));
+        }
+    })
+}
+</script>
+</head>
+<body>
+
+<h2>[ Ajax 객체 보내기 / 받기 ]</h2>
+<br>
+<p>1. 서버로 각자의 Parameter을 전달</p>
+<br>
+<form>
+    <table>
+        <tr><!-- 이름 -->
+            <th><label for="name">이름</label></th>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr><!-- 나이 -->
+            <th><label for="age">나이</label></th>
+            <td><input type="text" id="age"></td>
+        </tr>
+        <tr><!-- 전화 -->
+            <th><label for="phone">전화번호</label></th>
+            <td><input type="text" id="phone"></td>
+        </tr>
+        <tr>
+            <!-- submit으로 하면 이전화면으로 돌아가버림... -->
+            <td colspan="2"><input type="button" id="formButton1" value="저장"></td>
+        </tr>
+    </table>    
+</form>
+
+<hr>
+<br>
+<p>2. 서버로 객체 전달</p>
+<br>
+<form>
+    <table>
+        <tr><!-- 이름 -->
+            <th><label for="name2">이름</label></th>
+            <td><input type="text" id="name2"></td>
+        </tr>
+        <tr><!-- 나이 -->
+            <th><label for="age2">나이</label></th>
+            <td><input type="text" id="age2"></td>
+        </tr>
+        <tr><!-- 전화 -->
+            <th><label for="phone2">전화번호</label></th>
+            <td><input type="text" id="phone2"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" id="formButton2" value="저장"></td>
+        </tr>
+    </table>    
+</form>
+
+<hr>
+<br>
+<p>3. 서버로 객체 한번에(폼자체로) 전달</p>
+<br>
+<!-- 폼 자체로 보내기 때문에 폼에도 id가 있어야한다. -->
+<form id="writeForm3">
+    <table>
+        <tr><!-- 이름 (폼을 보내기때문에 name을 붙혀줘야한다.)-->
+            <th><label for="name3">이름</label></th>
+            <td><input type="text" name="name" id="name3"></td>
+        </tr>
+        <tr><!-- 나이 -->
+            <th><label for="age3">나이</label></th>
+            <td><input type="text" name="age" id="age3"></td>
+        </tr>
+        <tr><!-- 전화 -->
+            <th><label for="phone3">전화번호</label></th>
+            <td><input type="text" name="phone" id="phone3"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" id="formButton3" value="저장"></td>
+        </tr>
+    </table>    
+</form>
+
+<hr>
+<br>
+<p>4. 서버에서 객체를 String으로 받기</p>
+<br>
+<p><input type="button" id="bt1" value="객체 받기1"></p>
+<div id="output1">넘어온 객체</div>
+
+<hr>
+<br>
+<p>5. 서버에서 객체를 JSON으로 받기</p>
+<br>
+<p><input type="button" id="bt2" value="객체 받기2"></p>
+<div id="output2">넘어온 객체</div>
+</body>
+
+<hr>
+<br>
+<p>6. [번외 예제1] 서버에서 객체리스트를 JSON으로 받아 테이블로 표기하기</p>
+<br>
+<p><input type="button" id="bt3" value="번외 예제3"></p>
+<div id="output3">번외 예제</div>
+</body>
+</html>

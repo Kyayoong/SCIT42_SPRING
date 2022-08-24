@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+let i = 0;
+
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+	
+    $('#img1').on('click', test1);
+    $('#img2').on('click', test2);
+})
+
+function test1(){
+    //사진을 누를때 마다 10px씩 커짐
+    //$('#img1').css('width')       // 100px
+    let w = $(this).width();
+	let h = $(this).height();
+	   
+    $(this).css('width', w + 10);
+    $(this).css('height', h + 10);
+}
+
+/*  
+ *  클릭할 때마다 바뀜. 5번누르고 6번째에는 다시 처음사진으로. 
+ *  배열로 파일소스를 저장하면 된다.
+ */
+let path = '[[@{/image/}]]';
+let filename = ['mokoko_young.png', 'mokoko01.jpg', 'mokoko03.jpg', 'mokoko04.jpg', 'mokoko09.png', 'mokoko10.jpg'];
+let index = 0;
+function test2(){
+	index++;
+    if(index == filename.length){
+    	index = 0;
+    }
+    $(this).attr('src', path + filename[index]);
+}
+</script>
+</head>
+<body>
+<h2>[ jQuery의 예제 ]</h2>
+
+<p>이미지의 크기 변경</p>
+<p><img th:src="@{/image/mokoko01.jpg}" id="img1"></p>
+
+<p>이미지의 바꾸기</p>
+<p><img th:src="@{/image/mokoko_young.png}" id="img2"></p>
+
+</body>
+</html>

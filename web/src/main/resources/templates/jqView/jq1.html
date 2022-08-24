@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('color', 'blue');
+    $('*').css('text-align', 'center');
+    //태그선택자 : 특정 태그 전체 적용
+    $('p').css('color', 'green');
+    //id선택자
+    $('#text1').css('color', 'orange');
+    //클래스 선택자
+    $('.text2').css('color', 'red');
+    //그룹 선택자(여러개)
+    $('th, td').css('color', 'darkmagenta');
+    //종속 선택자
+    $('p.text2').css('color', 'midnightblue');
+    //하위 요소
+    $('div p.text3').css('color', 'coral');
+    $('.test section div p.text3').css('color', 'IndianRed');
+    //자식요소
+    $('div > p.text4').css('color', 'LightSteelBlue');
+    
+    //이외
+    $('div').css('background-color', '#393f43');
+    $('div').css('width', '600px');
+    $('div').css('margin', '0 auto');
+
+    //폼 안에서 특정 input tag만 사용하고자 할 경우.
+    $('form').css('width', '600px');
+    $('form').css('margin', '0 auto');
+    //속성 선택자
+    $('input[type=password]').css('background-color', 'LightSteelBlue');
+    $('input[checked]').css('background-color', 'yellow');
+})
+</script>
+</head>
+<body>
+<h2 class="text2">[ jQuery의 기본 문법, 선택자 ]</h2>
+<h3>http://jquery.com/</h3>
+<p>위에서 받은 파일을 static->js폴더에 넣는다.</p>
+
+<p>p 태그를 이용한 텍스트</p>
+<p>p 태그를 이용한 텍스트</p>
+<p id="text1">p 태그를 이용한 텍스트</p>
+<p class="text2">p 태그를 이용한 텍스트</p>
+<p class="text2 text3">p 태그를 이용한 텍스트</p>
+<p class="text4">p 태그를 이용한 텍스트</p>
+
+<div>
+    <p>div내의 p 태그</p>
+    <p class="text3">div내의 p 태그</p>
+	<p class="text4">div내의 p 태그</p>
+</div>
+
+<form>
+<table>
+    <tr>
+        <th>아이디</th>
+        <td><input type="text"></td>
+        <td><input type="submit"></td>
+    </tr>
+    <tr>
+        <th>비밀번호</th>
+        <td><input type="password"></td>
+        <td><input type="reset"></td>
+    </tr>
+</table>
+</form>
+
+</body>
+</html>

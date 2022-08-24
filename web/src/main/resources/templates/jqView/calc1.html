@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>jQuery</title>
+<style>
+#result {
+	width: 300px;
+	padding: 10px 5px;
+	margin-right: 0px;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: right;
+	background-color: white;
+	word-break: break-all;
+}
+input[type=button] {
+	font-size: 25px;
+	font-weight: bold;
+	width: 100%;
+	height: 50px;
+}
+table {
+	background-color: #dddddd;
+	border: 1px solid black;
+	padding: 5px;
+}
+td {
+	padding: 3px;
+}
+</style>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+/**
+ * 10자리 이상 & 연속적인 계산 가능
+ */
+$(document).ready(function () {
+	$('.numbt').click(inputNumber);
+	$('.opbt').click(operate);
+	$('.clearbt').click(clear);
+});
+
+//현재까지의 연산결과
+let result = 0;
+//이전 선택 연산자
+let lastOp = null;
+//현재 입력중인 숫자
+let inputNum = null;
+
+//입력 숫자 처리
+function inputNumber() {
+	let num = $(this).val();	//클릭한 버튼의 value
+	console.log(num, inputNum);
+	if (inputNum == null) {
+		if (num == '0') return;	//처음부터 0 누르면 리턴
+		else inputNum = '';
+	}
+	inputNum += num;
+	$('#result').html(inputNum);
+}
+//계산 처리
+function operate() {
+	if (inputNum != null) {		//숫자 없이 연산자부터 누른 경우
+		let n = Number(inputNum);
+		console.log(result, lastOp);
+		switch (lastOp) {
+			case '+' : result += n;	break;
+			case '-' : result -= n;	break;
+			case '*' : result *= n;	break;
+			case '/' : result /= n;	break;
+			default : result = n;
+		}
+		$('#result').html(result);
+	}
+	inputNum = null;
+	lastOp = $(this).val();
+}
+//초기화
+function clear() {
+	$('#result').html('0');
+	result = 0;
+	lastOp = null;
+	inputNum = null;
+}
+</script>
+</head>
+<body>
+<h2>[ 계산기 ]</h2>
+
+<table>
+	<tr>
+		<td colspan="4"><div id="result">0</div></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="numbt" value="7"></td>
+		<td><input type="button" class="numbt" value="8"></td>
+		<td><input type="button" class="numbt" value="9"></td>
+		<td><input type="button" class="opbt" value="+"></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="numbt" value="4"></td>
+		<td><input type="button" class="numbt" value="5"></td>
+		<td><input type="button" class="numbt" value="6"></td>
+		<td><input type="button" class="opbt" value="-"></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="numbt" value="1"></td>
+		<td><input type="button" class="numbt" value="2"></td>
+		<td><input type="button" class="numbt" value="3"></td>
+		<td><input type="button" class="opbt" value="*"></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="numbt" value="0"></td>
+		<td><input type="button" class="clearbt" value="C"></td>
+		<td><input type="button" class="opbt" value="="></td>
+		<td><input type="button" class="opbt" value="/"></td>
+	</tr>
+</table>
+
+</body>
+</html>
+

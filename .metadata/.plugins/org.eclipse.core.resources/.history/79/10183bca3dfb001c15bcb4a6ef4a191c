@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="container">
+		<h1>[ Spring 2 ]</h1>
+		<ul>
+			<li><a href="param/param1">GET method parameter1 전달하기</a></li>
+			<li><a href="param/param2">POST method parameter 전달하기</a></li>
+			<li><a href="param/param3">GET method로 객체 전달하기</a></li>
+		</ul>
+	</div>
+</body>
+</html>

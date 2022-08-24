@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#title').css('width', '500px');
+	$('.btn').css('text-align', 'center');
+})
+
+//write validation
+function validation(){
+	let form = $('#writeForm')
+	let memberid = $('#category').val();
+	let memberpw = $('#title').val();
+	let membername = $('#contents').val();
+	
+	
+	return false;
+}
+
+</script>
+</head>
+<body>
+	<h1>[ 판매글 등록 ]</h1>
+	
+
+	<form action="writeForm" method="post" id="writeForm" onsubmit="return validation()" enctype="multipart/form-data">
+		<table>
+			<tr>
+				<th>
+					<label for="category">카테고리</label>
+				</th>
+				<td>
+					<select name="category" id="category">
+						<option value="computer">컴퓨터</option>
+						<option value="camera">카메라</option>
+						<option value="car">자동차</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="title">제목</label>
+				</th>
+				<td>
+					<input type="text" name="title" id="title">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="contents">내용</label>
+				</th>
+				<td>
+					<textarea id="contents" name="contents" rows="20" cols="69"></textarea>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" class="btn">
+					<input type="submit" value="저장">&nbsp;
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	
+</body>
+</html>

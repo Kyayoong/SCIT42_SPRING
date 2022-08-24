@@ -1,0 +1,25 @@
+package net.softsociety.spring2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * 
+ * @author 조성준
+ *
+ */
+@Controller
+public class SessionController {
+	@GetMapping("ss/session1")
+	public String session1() {
+		return "redirect:/";
+	}
+	@GetMapping("ss/session2")
+	public String session2() {
+		return "session";
+	}
+	@GetMapping("ss/session3")
+	public String session3() {
+		return "redirect:/";
+	}
+}

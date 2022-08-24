@@ -1,0 +1,58 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.softsociety.exam.dao.BoardDAO">
+
+<!--판매글 저장 -->
+<insert id="insertBoard" parameterType="Board">
+	INSERT INTO MARKET_BOARD
+	(BOARDNUM, MEMBERID, TITLE, CONTENTS, CATEGORY)
+	VALUES
+	(MARKET_BOARD_SEQ.NEXTVAL, #{memberid}, #{title}, #{contents}, #{category})
+</insert>
+
+<!-- 판매글 리스트 가져오기 -->
+<select id="selectAllBoard" resultType="Board">
+	SELECT * 
+	FROM 
+		MARKET_BOARD
+	WHERE SOLDOUT != 'Y'
+	ORDER BY BOARDNUM DESC
+</select>
+
+<!-- 하나의 판매글 읽어오기 -->
+<select id="selectBoard" resultType="Board">
+	SELECT * FROM MARKET_BOARD WHERE BOARDNUM = #{boardnum}
+</select>
+
+<!-- 판매들의 리플 내용 가져오기 -->
+<select id="selectAllReply" parameterType="int" resultType="Reply">
+	SELECT * FROM MARKET_REPLY WHERE BOARDNUM = #{boardnum} ORDER BY REPLYNUM
+</select>
+
+<!-- 리플 저장하기 -->
+<insert id="replyWrite" parameterType="Reply">
+	INSERT INTO MARKET_REPLY 
+	(REPLYNUM, BOARDNUM, MEMBERID, REPLYTEXT)
+	VALUES
+	(MARKET_REPLY_SEQ.NEXTVAL, #{boardnum}, #{memberid}, #{replytext})
+</insert>
+
+<!-- 게시글 삭제하기 -->
+<delete id="deleteBoard" parameterType="map">
+	DELETE FROM MARKET_BOARD
+	WHERE
+		BOARDNUM = #{boardnum}
+		AND MEMBERID = #{memberid}
+</delete>
+
+<!-- 구매처리하기 -->
+<update id="orderBoard" parameterType="map">
+	UPDATE MARKET_BOARD 
+	SET 
+		SOLDOUT = 'Y',
+		BUYERID = #{buyerid}
+	WHERE BOARDNUM = #{boardnum}
+</update>
+</mapper>

@@ -1,0 +1,12 @@
+package net.softsociety.web.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import net.softsociety.web.dao.CommentDAO;
+
+@Service
+public class CommentServiceImpl implements CommentService {
+	@Autowired
+	CommentDAO dao;
+}

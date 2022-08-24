@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('pre').css('border', '1px solid black');
+    $('pre').css('width', '600px');
+    $('pre').css('margin', '0 auto');
+
+    /* 버튼 1 */
+    $('#bt1').click(test1);
+    /* 버튼 2 */
+    $('#bt2').click(test2);
+    /* 버튼 3 */
+    $('#bt3').click(test3);
+    /* 버튼 4 */
+    $('#bt4').click(test4);
+
+    /* 버튼 눌렀을 때, 실행될 함수 */
+    function test1(){
+        /* 배열의 다양한 생성방법 */
+        let ar1 = [10, 30];     //길이 2 (10과 30이 들어있음)
+        let ar2 = [];           //길이 0
+        let ar3 = new Array();  //길이 0
+        let ar4 = new Array(5); //칸만 5개
+
+        console.log(ar1);             //내용, 내용, 내용
+        console.log(ar1.length);      //길이
+        console.log(ar1[0]);          //0번째 원소의 내용
+
+        console.log(ar2);
+        console.log(ar2.length);
+        console.log(ar2[0]);
+
+        console.log(ar3);
+        console.log(ar3.length);
+        console.log(ar3[0]);
+
+        console.log(ar4);
+        console.log(ar4.length);
+        console.log(ar4[0]);
+
+        /* 대입하기 */
+        ar1[0] = 5;
+        console.log(ar1);
+        console.log(ar1.length);
+        console.log(ar1[0]);
+        /* fill() : 배열의 모든 칸을 ()로 채운다.*/
+        ar1.fill(10);                  //배열의 모든 칸을 10으로 채운다.
+        console.log(ar1);
+        ar1[3] = 20;
+        console.log(ar1);              //[0], [1]에 밖에 없는데, [2] 건너뛰고 [3]에 넣어도 오류가 안난다... (out of range 오류가 안남...)
+        
+        /* stack처럼 사용할 수도 있다. */
+        ar1.push(30);
+        console.log(ar1);
+        console.log(ar1.pop());        //pop도 가능하다!
+        console.log(ar1);
+
+        /* splice() : 해당 방자체를 삭제한다. (이거 쓰면 데이터 날아간 뒤 null이 된 방도 사라진다. 총 길이 줄어듬) */
+        ar1.splice(2, 1);              //2번 방부터 1개
+        console.log(ar1);
+
+        /* shift()->왼쪽, unshift(추가할 값)->오른쪽 : 특정 방향으로 쉬프트한다. */
+        ar1.shift();
+        console.log(ar1);
+        ar1.unshift(1);
+        console.log(ar1);
+    }
+    function test2(){
+        /* 반복문의 다양한 형태 1 : $뒤에 바로 each가 오는 경우 */
+        let arNum = [10, 20, 30];
+        $.each(arNum, function(idx, ob){    //idx : 방 넘버, ob : 방 안의 요소
+            console.log('idx : ' + idx + ', ' + 'ob : ' + ob);
+        })
+    }
+    function test3(){
+        /* 반복문의 다양한 형태 2 : 배열이 each 앞에 오는 경우 */
+        let arNum = [10, 20, 30];
+        $(arNum).each(function(idx, ob){
+            console.log('idx : ' + idx + ', ' + 'ob : ' + ob);
+        })
+    }
+    function test4(){
+        /* 객체의 배열 : 각 객체는 {}로 표현된다. */
+        let arObject = [{num:10, id:'111', title:'제목1'}, 
+                        {num:20, id:'aaa', title:'제목2'}, 
+                        {num:30, id:'bbb', title:'제목3'}];
+        /* 객체의 경우 ob.(attribute)로 특정지어 접근해야한다. */
+        $(arObject).each(function(idx, ob){
+            console.log('idx : ' + idx + ', ' + 'ob : ' + ob.num + ', ' + ob.id + ', ' + ob.title);
+        })
+    }
+})
+
+</script>
+</head>
+<body>
+<h2>[ jQuery의 배열과 each() ]</h2>
+
+<pre>
+    배열과 each()
+</pre>
+
+<p><input type="button" id="bt1" value="배열의 사용1"></p>
+<p><input type="button" id="bt2" value="배열의 사용2"></p>
+<p><input type="button" id="bt3" value="배열의 사용3"></p>
+<p><input type="button" id="bt4" value="배열의 사용4"></p>
+</body>
+</html>

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+div.shopContainer > table {
+	width: 800px;
+	text-align: center;
+	box-shadow: 2px 2px 5px gray;
+}
+
+div.button {
+	width: 790px;
+	text-align: center;
+}
+
+th {
+	background-color: skyblue;
+}

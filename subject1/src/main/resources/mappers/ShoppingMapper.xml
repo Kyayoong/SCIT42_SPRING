@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- net.softsociety.subject1.dao패키지의 ShoppingDAO인터페이스와 매핑됨 -->
+<mapper namespace="net.softsociety.subject1.dao.ShoppingDAO">
+	<select id="selectAllItem" resultType="ItemList">
+		SELECT * FROM ITEMLIST
+	</select>
+	
+	<select id="selectOneItem" parameterType="ItemList" resultType="ItemList">
+		SELECT * FROM ITEMLIST WHERE P_NUM = #{p_num}
+	</select>
+	
+	<insert id="insertOrderList" parameterType="OrderList">
+		INSERT INTO ORDERLIST
+		(ORDER_NUM, ID, NAME, ADDRESS, P_NAME, P_AMOUNT, P_PRICE, NUM)
+		VALUES
+		(orders_seq.NEXTVAL, #{id}, #{name}, #{address}, #{p_name}, #{p_amount}, #{p_price}, #{num})
+	</insert>
+	
+	<select id="selectAllLikes" parameterType="String" resultType="OrderList">
+		SELECT * FROM ORDERLIST WHERE ID = #{usrid}
+	</select>
+	
+	<delete id="deleteList" parameterType="Integer">
+		DELETE FROM ORDERLIST WHERE ORDER_NUM = #{orderNum}
+	</delete>
+</mapper>

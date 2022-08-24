@@ -1,0 +1,12 @@
+package net.softsociety.spring2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ModelController {
+	@GetMapping("model/model1")
+	public String model1() {
+		return "model1";
+	}
+}

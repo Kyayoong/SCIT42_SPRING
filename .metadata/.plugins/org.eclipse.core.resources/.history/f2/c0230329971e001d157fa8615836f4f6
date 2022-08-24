@@ -1,0 +1,4 @@
+package net.softsociety.web.service;
+
+public interface CommentService {
+}

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+h1, p {
+	text-align: center;
+}
+
+table{
+	margin: 0 auto;
+}
+
+input[type="submit"]{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: black; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="button"]{
+	height:30px;
+	width: 160px;
+	color: white;
+	background-color: black; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+} 
+
+input[type="submit"]:hover{
+	height:30px;
+	width: 80px;
+	color: black;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="button"]:hover{
+	height:30px;
+	width: 160px;
+	color: black;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}

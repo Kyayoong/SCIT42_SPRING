@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.table').css('text-align', 'center');
+	$('.title').css('width', '500px');
+	$('.container').css('border', '1px solid black');
+	$('.container').css('width', '800px');
+})
+
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>[ 판매 정보 게시판 ]</h1>
+	<p><a th:href="@{/board/write}" sec:authorize="isAuthenticated()">판매글 등록</a></p>
+	
+	<table class="table">
+		<tr>
+			<th>번호</th>
+			<th class="title">제목</th>
+			<th>작성자</th>
+		</tr>
+		<tr th:each="board:${list}">
+			<td th:text="${board.boardnum}">글 번호</td>
+			<td>
+				<a th:text="${board.title}" th:href="@{/board/read(boardnum=${board.boardnum})}">제목</a><!-- read경로 뒤에 ()를 붙혀 parameter을 보낼 수 있다. -->
+			</td>
+			<!--<td th:text="${board.title}" class="tdtitle">제목</td>-->
+			<td th:text="${board.memberid}">작성자</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

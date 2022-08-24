@@ -1,0 +1,88 @@
+DROP TABLE SPRING5_MEMBER;
+DROP TABLE SPRING5_BOARD;
+DROP TABLE SPRING5_REPLY;
+DROP SEQUENCE SPRING5_BOARD_SEQ;
+DROP SEQUENCE SPRING5_REPLY_SEQ;
+
+
+-- spring5 테이블 구조
+
+
+-- 회원 정보
+CREATE TABLE SPRING5_MEMBER (
+	MEMBERID	VARCHAR2(20) PRIMARY KEY,	-- 로그인 시 사용자를 식별하는 ID (유일값), 문자열, 20byte
+	MEMBERPW 	VARCHAR2(100) NOT NULL,		-- 로그인 시 필요한 비밀번호, 필수, 문자열, 100byte 
+					   						-- (비밀번호가 긴 이유는, 암호화되어 저장되기 때문이다. 관리자도 단순히 select로 불러와도 볼 수 없다.)
+	MEMBERNAME	VARCHAR2(10) NOT NULL,		-- 사용자의 이름
+	EMAIL 		VARCHAR2(30) NOT NULL,		-- 이메일 주소
+	PHONE 		VARCHAR2(11) NOT NULL,		-- 전화 번호
+	ADDRESS 	VARCHAR2(100) NOT NULL,		-- 집 주소
+	ENABLED 	NUMBER 						-- 계정 상태를 나타낸다. 숫자, 1자리, 1은 사용가능(기본값), 0은 사용불가능 아이디, check로 1 or 0 (휴면, 차단 등)
+				DEFAULT 1 CHECK(ENABLED IN (1, 0)),
+	ROLENAME 	VARCHAR2(13) 				-- 사용자 종류. 일반회원, 상급회원 등등, 기본값 'ROLE_USER'. 필수항목. 'ROLE_USER' 혹은 'ROLE_ADMIN' 둘 중에 하나.
+				DEFAULT 'ROLE_USER'
+				NOT NULL 
+				CHECK(ROLENAME IN ('ROLE_USER', 
+				  	  'ROLE_ADMIN')) 
+);
+
+INSERT INTO SPRING5_MEMBER
+(MEMBERID, MEMBERPW, MEMBERNAME, EMAIL, PHONE, ADDRESS, ENABLED, ROLENAME)
+VALUES
+('gildong011', '1q2w3e', '홍길동', 'gildont11@never.com', '01099990000', '서울시 강남구 새초롬한아파트 102동 2201호', 1, 'ROLE_USER');
+
+INSERT INTO SPRING5_MEMBER
+(MEMBERID, MEMBERPW, MEMBERNAME, EMAIL, PHONE, ADDRESS)
+VALUES
+('gildong012', '1q2w3e', '김길동', 'gildont12@never.com', '01099990000', '서울시 강남구 새초롬한아파트 102동 2203호');
+
+
+-- 게시판 글
+CREATE TABLE SPRING5_BOARD (
+	BOARDNUM	  NUMBER			PRIMARY KEY,							-- 글 번호 (PK)
+	MEMBERID	  VARCHAR2(20)		REFERENCES	SPRING5_MEMBER(MEMBERID),	-- 작성자 ID
+	TITLE		  VARCHAR2(300)		NOT NULL,								-- 글 제목
+	CONTENTS	  VARCHAR2(4000)	NOT NULL,								-- 글 내용 (4000바이트는 생각보다 작음. -> CLOB... 4기가까지 가능한 대용량문자열)
+	INPUTDATE	  DATE 				DEFAULT SYSDATE,						-- 작성 일시
+	HITS		  NUMBER			DEFAULT 0,								-- 조회수
+	ORIGINALFILE  VARCHAR2(300),											-- 첨부 파일의 원래 이름
+	SAVEDFILE	  VARCHAR2(100)												-- 서버에 저장된 첨부파일의 이름
+);
+-- 서버 한 디렉토리에 파일을 저장하고 테이블에는 파일 이름을 저장한다.
+-- (첨부파일 여러 개 첨부 가능하려면 테이블을 따로 만들어야함. 우린 하나만 첨부 가능하게...)
+-- 이름이 같으면 낭패이기 때문에, 저장할 때에는 특정 규칙을 줘서 임의의 이름으로 저장. 다시 불러오거나 다운 받을 때는 다시 원래 파일이름으로 준다.
+
+-- 게시판 번호에 사용할 시퀀스
+CREATE SEQUENCE SPRING5_BOARD_SEQ;
+
+-- 저장 예) 
+INSERT INTO SPRING5_BOARD (BOARDNUM, MEMBERID, TITLE, CONTENTS)
+VALUES (SPRING5_BOARD_SEQ.NEXTVAL, 'testMan', '제목', '내용');
+
+-- 게시글의 댓글
+CREATE TABLE SPRING5_REPLY(
+	REPLYNUM	NUMBER	PRIMARY KEY,										 -- 리플 번호
+	BOARDNUM	NUMBER	REFERENCES SPRING5_BOARD(BOARDNUM) ON DELETE CASCADE,	 -- 본문 글 번호
+	MEMBERID	VARCHAR2(20)	REFERENCES SPRING5_MEMBER(MEMBERID),		 -- 작성자 ID
+	REPLYTEXT	VARCHAR2(200)	NOT NULL,									 -- 내용
+	INPUTDATE	DATE			DEFAULT SYSDATE								 -- 작성일
+);
+
+-- 댓글 번호에 사용할 시퀀스
+CREATE SEQUENCE SPRING5_REPLY_SEQ;
+
+-- 저장 예)
+INSERT INTO SPRING5_REPLY (REPLYNUM, BOARDNUM, MEMBERID, REPLYTEXT)
+VALUES (SPRING5_REPLY_SEQ.NEXTVAL, 1, '작성자', '내용')
+
+
+
+
+
+
+
+
+
+
+
+

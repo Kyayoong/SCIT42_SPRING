@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	table {
+		border-collapse: collapse;
+		width: 300px;
+		text-align: center;
+	}
+	
+	div.container{
+		width: 800px;
+		margin: 0 auto;
+	}
+</style>
+</head>
+<body>
+<div class="container">
+	<h1>Insert Page</h1>
+	
+	<form action="insert" method="post" onsubmit="return validation()">
+		<table border=1>
+		<tr>
+			<td>name</td>
+			<td><input type="text" name="name" id="name"></td>
+		</tr>
+		<tr>
+			<td>age</td>
+			<td><input type="text" name="age" id="age"></td>
+		</tr>
+		</table>
+		<input type="submit" value="저장">
+		<input type="reset" value="취소">
+	</form>
+</div>
+</body>
+</html>

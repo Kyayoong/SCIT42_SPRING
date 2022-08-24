@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('*').css('margin', '20 auto');
+  	//처음에 추천수 가져오는 기능. 자바단에서 model로 가져오면 이거 필요x
+    reloadCnt();
+    
+    $('#bt').click(commendBt);
+})
+
+function commendBt() {
+	$.ajax({
+        url: 'vote',
+        data: {boardnum : $(this).attr('boardnum')},
+        dataType: 'text',
+        success: function(i){
+        	let currentCnt = i;
+        	$('#cnt').html('현재 추천수 : ' + i);
+        },
+        error: function(e){
+        	alert(JSON.stringify(e));
+        }
+    })
+}
+
+//새로고침 기능(추천수 읽어오기 용도)
+function reloadCnt(){
+    $.ajax({
+        url: 'reload',
+        //모델로 가져온 게시글 번호를 어떻게 ajax에 적용하는가? 그냥 중괄호 2개쓰는거로 바로 적용 가능하다.
+        data : {boardnum : [[${boardnum}]]},
+        dataType: 'text',
+        success: function(i){
+            let currentCnt = i;
+        	$('#cnt').html('현재 추천수 : ' + i);
+        },
+        error: function(e){
+        	alert(JSON.stringify(e));
+        }
+    })
+}
+</script>
+</head>
+<body>
+
+<h2>[ 예제2 ] Ajax로 추천수 올리기</h2>
+<!-- 버튼 클릭시 컨트롤러로 해당 글 번호 보내기(여기선 1),
+	 서버에서 쿼리 실행,
+	 현재 추천수 읽어오기
+	 success를 통해 가져온 추천수를 표기하기. -->
+<div>
+    <!-- 처음 페이지 방문 시, 모델로 추천수를 가져왔을 때
+    <span id="cnt" th:text="|현재 추천수 : ${cnt}|">현재 추천수 : 0</span> -->
+
+    <!-- 스크립트에서 처음 페이지 방문시 추천수 불러오기를 할 때 -->
+	 <span id="cnt">현재 추천수 : 0</span>
+    <input type="button" id="bt" boardnum="1" value="추천하기">
+</div>
+</body>
+</html>

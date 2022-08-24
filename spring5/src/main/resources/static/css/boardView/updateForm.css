@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+div.container{
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 10px;
+
+}
+
+div.title {
+	width: 800px;
+	height: 100px;
+	margin: 0 auto;
+}
+
+table.updateForm{
+	width: 700px;
+	margin: 10px auto 10px auto;
+}
+
+input[type="text"]{
+	width: 498px;
+}
+
+textarea{
+	resize:none;
+}
+
+th{
+	width: 100px;
+	background-color: lightgray;
+}
+
+input[type="submit"], input[type="reset"], input[type="button"]{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: black; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="submit"]:active, input[type="reset"]:active, input[type="button"]:active{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover{
+	height:30px;
+	width: 80px;
+	color: black;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+div.quickMenu {
+	border: 1px dashed black;
+	text-align: center;
+	width: 150px;
+	height: 200px;
+	background-color: lightgray;
+   	position: fixed; /* 기준점 : 전체 모니터를 기준으로 해당 위치에 고정시킴. ==> 스크롤해도 그 위치로 따라온다. */
+    bottom: 400px;
+    right: 100px;
+}
+
+p{
+	margin-top: 10px;
+}

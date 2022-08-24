@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('*').css('text-align', 'left');
+    $('#btn').css('text-align', 'center');
+})
+</script>
+</head>
+<body>
+	<h1>[ 판매 정보 게시판 ]</h1>
+	
+		
+</body>
+</html>

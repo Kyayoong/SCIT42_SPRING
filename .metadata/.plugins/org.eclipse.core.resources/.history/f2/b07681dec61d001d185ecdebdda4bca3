@@ -1,0 +1,5 @@
+package net.softsociety.web.domain;
+
+public class Person {
+
+}

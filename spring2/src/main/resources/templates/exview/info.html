@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>개인정보입력</title>
+<style>
+	#infoForm {
+		width: 500px;
+		text-align: center;
+	}
+	td {
+		text-align: left;
+	}
+	input {
+		width: 150px;
+		font-size: 25px;
+		margin: 5px;
+	}
+	input#num {
+		width: 300px;
+	}
+	label {
+		font-size: 25px;
+	}
+</style>
+<script>
+function check() {
+	let name = document.getElementById('name');
+	let num = document.getElementById('num');
+	
+	if (name.value.length < 2) {
+		alert('이름을 입력하세요.');
+		return false;
+	}
+	if (num.value.length != 14) {
+		alert('주민등록번호를 입력하세요.');
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<div id="infoForm">
+	<h2>개인정보입력</h2>
+	<form action="info" method="post" onsubmit="return check();">
+	<table>
+	<tr>
+		<td><label for="name">이름</label></td>
+		<td><input type="text" name="name" id="name"></td>
+	</tr>
+	<tr>
+		<td><label for="num">주민등록번호</label></td>
+		<td><input type="text" name="num" id="num" placeholder="000000-0000000 형식으로 입력"></td>
+	</tr>
+	</table>
+		<input type="submit" value="입력">
+	</form>
+	</div>
+</body>
+</html>

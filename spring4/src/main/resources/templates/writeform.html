@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+	th, td{
+		padding-top: 10px;
+	}
+	
+	h2{
+		font-family: 궁서;
+	}
+</style>
+<body>
+	<h2>[ 방명록 글쓰기 ]</h2>
+	
+	<form action="write" method="post" onsubmit="return validation()">	
+	<table class="table">
+		<tr>
+			<th><label for="name">이름</label></th>
+			<td>
+				<input id="name" type="text" name="name">
+			</td>
+		</tr>
+		<tr>
+			<th><label for="password">비밀번호</label></th>
+			<td>
+				<input id="password" type="text" name="password">
+			</td>
+		</tr>
+			<tr>
+				<th><label for="message">의견</label></th>
+				<td><textarea name="message" id="message" cols="40" rows="5"></textarea></td>
+		</tr>
+		<tr>
+            <th colspan="2">
+                <input type="submit" value="전송">&nbsp;
+            </th>
+        </tr>
+		</table>
+	</form>
+</body>
+</html>

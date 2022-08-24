@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>입력 결과</title>
+<style>
+#infoOutput {
+	font-size: 30px;
+}
+</style>
+</head>
+<body>
+	<h2>입력결과</h2>
+	<div id="infoOutput">
+		<p>이름 : [[${name}]]</p>
+		<p>생년월일 : [[${y}]]년 [[${m}]]월 [[${d}]]일</p>
+		<p>나이 : [[${age}]]세</p>
+		<p>성별 : [[${str}]]</p>
+	</div>
+</body>
+</html>

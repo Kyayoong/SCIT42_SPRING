@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>모델1</title>
+</head>
+<body>
+	<h2>[ Model 사용하기 ]</h2>
+	<p>[[${string}]]</p>
+	<p>[[${string+1}]]</p>	 <!-- str + ~~ = 문장 합치기 -->
+	<p>[[${number}]]</p>
+	<p>[[${number + 1}]]</p> <!-- 간단한 계산식 -->
+	<p>[[${number > 1}]]</p> <!-- 간단한 연산 -->
+	<p>[[${person}]]</p>	 <!-- 객체 -->
+	<p>[[${person.name}]]</p><!-- 해당 객체의 name값. getName을 활용한다. -->
+	<p>[[${aaa}]]</p>		 <!-- 변수명이 없는거면 아무 표시도 안나온다. -->
+	
+</body>
+</html>

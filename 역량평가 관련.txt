@@ -1,0 +1,18 @@
+[spring5와 비슷함]
+
+1. application properties 잘 확인하고, gradle 안되면 새로고침 잘해야.
+2. 로그인 되어있는지 여부 sec:authorize="isAuthenticated()"
+3.
+4.
+5. 가입 등은 페이지로 이동하는 컨트롤러, 가입처리해주는 컨트롤러로 나뉠 것이다.
+6. member.java에서 enabled와 rolename이 있는데, 이들은 security를 위한 변수들.
+    ㄴ 실습에서는 그냥 다 1(정상적)으로 처리
+    ㄴ rolename은 권한 구분 이름. 실습에선 하나만 정해서 한다. ('ROLE_USER') ==> SECURITY관련 설정에서 권한 이름을 접목시켜줘야함.
+7. 디자인은 점수에 상관없다.
+8. AJAX를 이용한 처리도 포함된다.
+9. TEXT파일로 SQL관련하여 다 넣어야한다. 특히 CREATE부분.
+
+
+[ 17:50까지 제출 ]
+
+경로 : c드라이브 하단에 임의의 폴더 만들어 넣고 임포트

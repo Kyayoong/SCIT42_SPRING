@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>계산하기</title>
+<style>
+	#calcForm {
+		width: 400px;
+		text-align: center;
+	}
+	input[type="text"] {
+		width: 100px;
+		font-size: 25px;
+	}
+	select {
+		width: 80px;
+		font-size: 30px;
+		text-align: center;
+	}
+	input[type="submit"] {
+		width: 100px;
+		font-size: 25px;
+		margin: 10px;
+	}
+</style>
+<script>
+function check() {
+	let num1 = document.getElementById('num1');
+	let num2 = document.getElementById('num2');
+	
+	if (num1.value == '' || isNaN(num1.value)) {
+		alert('정수를 입력하세요.');
+		num1.focus();
+		num1.select();
+		return false;
+	}
+	if (num2.value == '' || isNaN(num2.value)) {
+		alert('정수를 입력하세요.');
+		num2.focus();
+		num2.select();
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<div id="calcForm">
+	<h2>계산하기</h2>
+	<form action="calc" method="post" onsubmit="return check();"> <!-- return이 없으면 check()가 false여도 form 내용이 무조건 서버로 넘어가짐. -->
+		<input type="text" name="num1" id="num1">
+		<select name="op" id="op">
+			<option value="+">+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select>
+		<input type="text" name="num2" id="num2">
+		<br>
+		<input type="submit" value="계산">
+	</form>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thmeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/boardView/updateForm.css}">
+</head>
+<script type="text/javascript">
+function validation(){
+	let title = document.getElementById("title");
+	let content = document.getElementById("contents");
+	let form = document.getElementById("update");
+	
+	if(title.value == '' || content.value == ''){
+		alert("제목 혹은 내용 확인");
+		return false;
+	}
+	return true;
+}
+</script>
+<body>
+<div class="container">
+	<div class="title">
+		<h1>글수정하기</h1>
+	</div>
+	<!-- 파일 첨부 시, get방식은 text만 가능하고 binary로 하려면 post 여야만 한다. -->
+	<!-- enctype은 파일을 못받게 되더라도 오류표시 안하고 조용히 올라감. null로 저장됨. -->
+	<div class="tableContainer">
+		<form action="update" method="post" id="update" onsubmit="return validation()" enctype="multipart/form-data">
+			<table class="updateForm">
+				<tr>
+					<th>
+						<label for="title">제목</label>
+					</th>
+					<td>
+						<input type="text" name="title" id="title" th:value="${board.title}">
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="contents">내용</label>
+					</th>
+					<td>
+						<textarea id="contents" name="contents" rows="20" cols="69" th:text="${board.contents}"></textarea>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>
+					<!-- 기존 파일을 보여주긴 어렵고, 저장이 되어있었다면 해당 파일의 이름 정도만 보여준다(p같은 다른 태그를 이용하여) -->
+					<!-- 새로운 파일이 올라왔다면 multifile 뭐시기 그거로 파일이 달라졌는지 체크하고 새로 저장후 기존 것은 삭제한다. -->
+						<label for="files">파일첨부</label>
+					</th>
+					<td colspan="2">
+						<input th:if="${board.originalfile} == null" type="file" id="files" name="upload" size="30">
+						<input th:if="${board.originalfile} != null" type="file" id="files" name="upload" size="30">
+					</td>				
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="submit" value="저장">&nbsp;
+						<input type="button" value="이전으로" th:onclick="|location.href='@{/board/read(boardnum=${board.boardnum})}'|">&nbsp;
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<!-- 퀵메뉴 넣고 누구나 홈화면으로 가기 가능 -->
+<div class="quickMenu">
+	<p>[Quick Menu]</p>
+	<p><input type="button" value="HOME" onclick="location.href='/spring5'"></p>
+	<p sec:authorize="isAuthenticated()"><input type="button" value="logout" onclick="location.href='/spring5/logout'"></p>
+	<p sec:authorize="isAnonymous()"><input type="button" value="login" onclick="location.href='/spring5/member/loginForm'"></p>
+</div>
+</body>
+</html>

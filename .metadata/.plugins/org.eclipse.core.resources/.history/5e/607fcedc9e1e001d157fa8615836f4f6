@@ -1,0 +1,7 @@
+package net.softsociety.web.service;
+
+import net.softsociety.web.domain.Comment;
+
+public interface CommentService {
+	public int insertComment(Comment comment);
+}

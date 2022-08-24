@@ -1,0 +1,76 @@
+package net.softsociety.exam.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import net.softsociety.exam.dao.BoardDAO;
+import net.softsociety.exam.domain.Board;
+import net.softsociety.exam.domain.Reply;
+
+
+@Transactional
+@Service
+public class BoardSeviceImpl implements BoardService {
+	@Autowired
+	BoardDAO dao;
+	
+	@Override
+	public ArrayList<Board> selectAllBoard() {
+		ArrayList<Board> list = dao.selectAllBoard();
+		return list;
+	}
+	
+	@Override
+	public int insertBoard(Board board) {
+		int result = dao.insertBoard(board);
+		return result;
+	}
+
+	@Override
+	public Board selectBoard(int boardnum) {
+		Board board = dao.selectBoard(boardnum);
+		return board;
+	}
+
+	@Override
+	public int deleteBoard(int boardnum, String memberid) {
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("boardnum", boardnum);
+		map.put("memberid", memberid);
+		int result = dao.deleteBoard(map);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Reply> selectAllReply(int boardnum) {
+		ArrayList<Reply> list = dao.selectAllReply(boardnum);
+		return list;
+	}
+
+	@Override
+	public int replyWrite(Reply reply) {
+		int result = dao.replyWrite(reply);
+		return result;
+	}
+
+	@Override
+	public int orderBoard(int boardnum, String buyerid) {
+		HashMap<Object, Object> map = new HashMap<>();
+		map.put("boardnum", boardnum);
+		map.put("buyerid", buyerid);
+		int result = dao.orderBoard(map);
+		return result;
+	}
+
+	@Override
+	public ArrayList<Board> searchRoadBoard() {
+		ArrayList<Board> list = dao.searchRoadBoard();
+		return list;
+	}
+
+
+}

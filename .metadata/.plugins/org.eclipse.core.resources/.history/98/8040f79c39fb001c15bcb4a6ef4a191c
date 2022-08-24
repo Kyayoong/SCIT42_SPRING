@@ -1,0 +1,25 @@
+package net.softsociety.spring2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class paramController {
+	@GetMapping({"param/param1"})
+	public String param1() {
+		//forwarding - 요청받고 이동하는 것
+		return "param1";
+	}
+	
+	//param1.html에서 전달되는 parameter 받기.
+	@GetMapping("param/input1")
+	public String input1(String name, String service, String phone){
+		System.out.println("전달된 이름:" + name);
+		System.out.println("전달된 통신사 : ");
+		System.out.println("전달된 번호 : ");
+		
+		//보여줄 곳은 없지만 무조건 return해야한다. ex) 가입되었습니다~~ 라는 화면 등등.
+		//보여줄 곳이 따로 없으면 기존 페이지로 이동한다.
+		return "redirect:/";
+	}
+}

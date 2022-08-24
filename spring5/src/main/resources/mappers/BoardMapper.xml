@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- net.softsociety.spring5.dao.BoardDAO -->
+ <mapper namespace="net.softsociety.spring5.dao.BoardDAO">
+	<!-- 게시글 저장 -->
+	<!-- 저장 시, 파일이 null이면 오류나기 때문에 동적 sql을 사용하여 파일 칼럼 두개 모두 null이 아닐 때 포함한다. -->
+	<!-- 동적 SQL시, IF문을 사용할 때, VO가 아닌 단순 INT, STRING 등의 단일 객체가 오면, "_parameter"로 표현한다. -->
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO SPRING5_BOARD(
+		BOARDNUM
+		, MEMBERID
+		, TITLE
+		, CONTENTS
+		<if test="originalfile != null and savedfile != null">
+		, ORIGINALFILE
+		, SAVEDFILE
+		</if>
+		)
+		VALUES(
+		SPRING5_BOARD_SEQ.NEXTVAL
+		, #{memberid}
+		, #{title}
+		, #{contents}
+		<if test="originalfile != null and savedfile != null">
+		, #{originalfile}
+		, #{savedfile}
+		</if>
+		)
+	</insert>
+	
+	<!-- 게시글 개수 가져오기 -->
+	<select id="count" parameterType="map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			SPRING5_BOARD
+	</select>
+	
+	<!-- 게시글 목록 모두 가져오기 -->
+	<select id="selectAllBoard" resultType="Board" parameterType="Map">
+		SELECT 
+				BOARDNUM, MEMBERID, TITLE,
+				TO_CHAR(INPUTDATE, 'YYYY-MM-DD') AS INPUTDATE, HITS
+		FROM 	SPRING5_BOARD 
+		<!-- 검색조건이 있는 경우 -->
+		<if test="type != null and searchWord != null">
+			<!-- where 태그는 안의 if가 모두 false일 때, where문이 남지 않게 자동으로 where을 처리하게 해준다. -->
+			<where>
+			<if test="type == 'title'">
+				TITLE LIKE '%'||#{searchWord}||'%'
+			</if>
+			<if test="type == 'contents'">
+				CONTENTS LIKE '%'||#{searchWord}||'%'
+			</if>
+			<if test="type == 'memberid'">
+				MEMBERID LIKE #{searchWord}
+			</if>
+			<if test="type == 'all'">
+				TITLE LIKE '%'||#{searchWord}||'%'
+				OR 	CONTENTS LIKE '%'||#{searchWord}||'%'
+				OR	MEMBERID LIKE #{searchWord}
+			</if>
+			</where>
+		</if>
+		ORDER BY BOARDNUM DESC
+	</select>
+	
+	<!-- 하나의 게시글 가져오기 -->
+	<select id="selectBoard" parameterType="int" resultType="Board">
+		SELECT * FROM SPRING5_BOARD WHERE BOARDNUM = #{boardnum}
+	</select>
+	
+	<!-- 게시글의 조회수 올리기 -->
+	<update id="updateHits" parameterType="int">
+		UPDATE SPRING5_BOARD
+		SET HITS = HITS + 1
+		WHERE BOARDNUM = #{boardnum}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="map">
+		DELETE FROM SPRING5_BOARD
+		WHERE
+			BOARDNUM = #{boardnum}
+			AND MEMBERID = #{memberid}
+	</delete>
+	
+	<!-- 댓글 저장 -->
+	<insert id="replyWrite" parameterType="Reply">
+		INSERT INTO SPRING5_REPLY 
+		(REPLYNUM, BOARDNUM, MEMBERID, REPLYTEXT)
+		VALUES
+		(SPRING5_REPLY_SEQ.NEXTVAL, #{boardnum}, #{memberid}, #{replytext})
+	</insert>
+	
+	<!-- 댓글 목록 가져오기 -->
+	<select id="selectAllReply" parameterType="int" resultType="Reply">
+		SELECT * 
+		FROM SPRING5_REPLY 
+		WHERE BOARDNUM = #{boardnum}
+		ORDER BY REPLYNUM
+	</select>
+	
+	<!-- 특정 댓글 가져오기 -->
+	<select id="selectReply" parameterType="int" resultType="Reply">
+		SELECT *
+		FROM SPRING5_REPLY
+		WHERE REPLYNUM = #{replynum}
+	</select>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteReply" parameterType="Reply">
+		DELETE FROM SPRING5_REPLY
+		WHERE REPLYNUM = #{replynum}
+			  AND MEMBERID = #{memberid}
+	</delete>
+ </mapper>
+ 

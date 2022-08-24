@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>[ POST method로 parameter 전달하기 ] </h1>
+	<form action="input2" method="get">
+		<p>이름<input type="text" name="name" placeholder="이름을 입력하세요."></p>
+		<p>전화
+			<input type="radio" name="service" value="kt" /> KT
+			<input type="radio" name="service" value="sk" /> SKT
+			<input type="radio" name="service" value="lg" /> LG UPlus
+			<input type="text" name="phone" placeholder="전화번호를 입력하세요">
+		</p>
+		<p>
+			<input id="submit" type="submit" value="전송">&nbsp;
+			<input id="clear" type="reset" value="취소">&nbsp;
+		</p>
+	</form>
+</body>
+</html>

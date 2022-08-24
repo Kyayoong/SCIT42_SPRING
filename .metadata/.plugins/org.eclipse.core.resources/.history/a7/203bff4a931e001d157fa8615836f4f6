@@ -1,0 +1,8 @@
+package net.softsociety.web.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class CommentController {
+	//여기서는 댓글 관련 일반 메소드만 다룸 (ajax는 따로 관리함)
+}

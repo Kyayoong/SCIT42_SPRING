@@ -1,0 +1,5 @@
+--spring3 프로젝트의 테이블 생성
+CREATE TABLE PERSON(
+    NAME VARCHAR2(20),
+    AGE NUMBER(3)
+);

@@ -1,0 +1,39 @@
+-- 추천기능 예제 용 테이블 작성
+CREATE TABLE WEB_RECOMMEND(
+	BOARDNUM	 NUMBER PRIMARY KEY,
+	CNT			 NUMBER DEFAULT 0
+);
+INSERT INTO WEB_RECOMMEND (BOARDNUM) VALUES (1);
+
+--예제에서 실행될 쿼리.
+UPDATE WEB_RECOMMEND SET CNT = CNT + 1 WHERE BOARDNUM = 1;
+
+-- 댓글 기능
+CREATE TABLE WEB_COMMENT(
+	NUM		NUMBER PRIMARY KEY,
+	NAME	VARCHAR2(20) NOT NULL,
+	TEXT	VARCHAR2(300) NOT NULL
+);
+CREATE SEQUENCE WEB_COMMENT_SEQ;
+
+INSERT INTO WEB_COMMENT
+(NUM, NAME, TEXT)
+VALUES
+(WEB_COMMENT_SEQ.NEXTVAL, '홍길동', '댓글 내용입니다.');
+
+
+-- 다른 에제 id 중복검사 기능
+CREATE TABLE WEB_MEMBER(
+	MEMBERID VARCHAR2(20) PRIMARY KEY,
+	NAME VARCHAR2(20) NOT NULL
+)
+INSERT INTO WEB_MEMBER VALUES ('abc', '홍길동');
+SELECT * FROM WEB_MEMBER WHERE MEMBERID = 'abc';
+SELECT COUNT(*) FROM WEB_MEMBER WHERE MEMBER ID = 'abc';
+
+$('#submitButton').attr('disabled', false);
+<form action="join" method="post">
+	<p>ID <input type="text" id="memberid"><span> id="msg"</span></p>
+	<p>이름 <input type="text" id="name" required="required"></p>
+	<p><input type="submit" value="가입" id="submitButton" disabled="disabled"></p>
+<form>

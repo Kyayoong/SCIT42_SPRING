@@ -1,0 +1,5 @@
+package net.softsociety.spring2.controller;
+
+public class ModelController {
+
+}

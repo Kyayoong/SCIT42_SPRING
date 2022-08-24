@@ -1,0 +1,177 @@
+package net.softsociety.exam.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
+import net.softsociety.exam.domain.Board;
+import net.softsociety.exam.domain.Reply;
+import net.softsociety.exam.service.BoardService;
+
+/**
+ * 상품게시판 관련 콘트롤러
+ */
+@Slf4j
+@RequestMapping("board")
+@Controller
+public class BoardController {
+	@Autowired
+	BoardService service;
+	
+	/**
+	 * 판매정보 게시판으로 이동하는 컨트롤러
+	 * @param model : 게시글을 담기 위한 model
+	 * @return
+	 */
+	@GetMapping("boardlist")
+	public String boardList(Model model) {
+		//게시글 리스트 가져오기
+		ArrayList<Board> list = service.selectAllBoard();
+		
+		//게시글 리스트 html로 보내기
+		model.addAttribute("list", list);
+		
+		return "/boardList";
+	}
+	
+	/**
+	 * 판매글 등록 페이지로 이동하는 컨트롤러
+	 * @return
+	 */
+	@GetMapping("write")
+	public String boardWrite() {
+		return "/boardWrite";
+	}
+	
+	/**
+	 * 판매글을 저장하기위한 컨트롤러
+	 * @param board : 작성된 게시글
+	 * @return
+	 */
+	@PostMapping("writeForm")
+	public String boardInsert(
+			Board board,
+			@AuthenticationPrincipal UserDetails user) {
+		//받아온 게시글 정보에 작성자 넣기
+		board.setMemberid(user.getUsername());
+		
+		//저장하기
+		int result = service.insertBoard(board);
+		
+		return "redirect:/board/boardlist";
+	}
+	
+	/**
+	 * 글을 읽는 컨트롤러
+	 * @param boardnum
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("read")
+	public String read(
+			@RequestParam(name="boardnum", defaultValue = "0") int boardnum,
+			Model model) {	
+		
+		Board board = service.selectBoard(boardnum);
+		//만약 글이 없으면 다시 목록으로!
+		if(board == null) {
+			log.debug("글 없음!");
+			return "redirect:/board/boardlist";
+		}
+		
+	
+		//해당 게시글의 리플을 가져온다
+		ArrayList<Reply> rplist = service.selectAllReply(boardnum);
+		log.debug("가져온 rp목록 : {}", rplist);
+		//model에 저장하여 보낸다.
+		model.addAttribute("board", board);
+		model.addAttribute("rplist", rplist);
+		
+		return "/boardRead";
+	}
+	
+	/**
+	 * 게시글 삭제 컨트롤러
+	 * @param boardnum : 삭제할 게시글 번호
+	 * @param user : 삭제하는 회원의 정보
+	 * @return
+	 */
+	@GetMapping("deleteBoard")
+	public String deleteBoard(
+			int boardnum,
+			@AuthenticationPrincipal UserDetails user) {
+		//게시글을 조회해본다
+		Board board = service.selectBoard(boardnum);
+		if(board == null) {
+			return "redirect:/board/boardlist";
+		}
+		
+		//현재 로그인 아이디 확인
+		String memberid = user.getUsername();
+		
+		//글 삭제 (글 번호와 아이디 전달)
+		int result = service.deleteBoard(boardnum, memberid);
+		
+		
+		return "redirect:/board/boardlist";
+	}
+	
+	/**
+	 * 구매처리 컨트롤러
+	 * @param boardnum : 구매할 게시글 번호
+	 * @param user : 구매자 정보
+	 * @return
+	 */
+	@GetMapping("order")
+	public String order(
+			int boardnum,
+			@AuthenticationPrincipal UserDetails user) {
+		String buyerid = user.getUsername();
+		int result = service.orderBoard(boardnum, buyerid);
+		
+		return "redirect:/board/boardlist";
+	}
+	
+	/**
+	 * 댓글 입력 컨트롤러
+	 * @param boardnum : 댓글 입력할 게시글 번호
+	 * @param replytext : 댓글 내용
+	 * @param user : 작성자 정보
+	 * @return
+	 */
+	@PostMapping("replyWrite")
+	public String replyWrite(
+			int boardnum, 
+			String replytext,
+			@AuthenticationPrincipal UserDetails user) {
+		//reply객체(본문 글번호, 리플 내용을 포함)에 로그인 아이디를 추가하고
+		Reply reply = new Reply();
+		reply.setBoardnum(boardnum);
+		reply.setReplytext(replytext);
+		reply.setMemberid(user.getUsername());
+
+		//DB 저장
+		int result = service.replyWrite(reply);
+
+		//읽던 글로 돌아가기
+		return "redirect:/board/read?boardnum=" + boardnum;
+	}
+	
+	@GetMapping("search")
+	public String search() {
+		return "/boardSearch";
+	}
+	
+	//Ajax로 검색 결과 불러오기
+	
+}

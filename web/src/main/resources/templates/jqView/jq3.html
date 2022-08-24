@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('pre').css('border', '1px solid black');
+    $('pre').css('width', '600px');
+    $('pre').css('margin', '0 auto');
+    
+    //html(), 버튼1
+    $('#bt1').on('click', function(){
+    	//html은 h2로 씌어져있는 객체들을 배열의 형태로 가져온다.
+        /* let s = $('h2').html();
+        alert(s); */
+        
+        /* jQuery의 반복문.. 무조건 외워라! */
+        $('h2').each(function(i, ob){
+            alert(i + ', ' + $(ob).html()); //객체로 가져오기 때문에 태그명까지 같이 나온다.
+        }) 
+        /* $('h2')라는 배열에 각 index마다 실행할 함수. i는 each의 앞에 있는 h2의 한 index넘버. ob는 가져오는 하나의 객체요소.
+         * ob도 하나의 객체이기 때문에 $()로 감싸줘야한다.
+         */
+    });
+
+    //2번 버튼
+    $('#bt2').on('click', function(){
+        /* text()는 해당 태그의 내용들을 text형태로 가져온다 */
+    	let s = $('h2').text();
+        alert(s);
+    })
+
+    //3번 버튼
+    $('#bt3').on('click', function(){
+        let s = $('#text1').val();
+        alert(s);
+    })
+
+    //4번 버튼(오버로딩)
+    $('#bt4').on('click', function(){
+        $('#div1').html('<p style="color:coral;">html함수로 변경한 내용</p>');
+        $('#div2').text('<p style="color:#393f43;">text함수로 변경한 내용</p>');
+        $('#text2').val('val함수로 변경한 내용');
+    })
+
+    //5번 버튼 (attr(): 속성 바꾸기) 파라미터(하나일 땐 불러오기, 2개일땐 바꾸기)
+    $('#bt5').on('click', function(){
+        /* 속성 읽어오기 */
+        let s = $('#img1').attr('src');
+        let i = $('#bt4').attr('id');
+        let t = $('#bt4').attr('type');
+        alert(s + ', ' + i + ', ' + t);
+
+        /* 속성 변경하기 : 이미지 소스를 바꿔서 보이는 그림을 변경한다. */
+        $('#img1').attr('src', '[[@{/image/mokoko01.jpg}]]')
+    })
+
+    //6번 버튼 (css() : css정보를 변경하기) 파라미터(하나일땐 불러오기, 2개일땐 바꾸기)
+    $('#bt6').on('click', function(){
+        /* css 읽어오기 */
+    	let w = $('#img1').css('width');
+    	let h = $('#img1').css('height');
+        alert(w + ', ' + h);
+        
+        /* css 변경하기 */
+        $('#img1').css('width', '600px');
+        $('#img1').css('height', '600px');
+    })
+    
+    /* 이벤트로 이미지 크기 변경하기 */
+    /* $('#img1').on('mouseenter', function(){
+    	$('#img1').css('width', '900px');
+        $('#img1').css('height', '900px');
+    })
+    $('#img1').on('mouseleave', function(){
+    	$('#img1').css('width', '300px');
+        $('#img1').css('height', '300px');
+    }) */
+    $('#img1').hover(function(){
+    	$('#img1').css('width', '900px');
+        $('#img1').css('height', '900px');
+    }, function(){
+    	$('#img1').css('width', '300px');
+        $('#img1').css('height', '300px');
+    })
+
+    /* 7번버튼 (addClass() : css를 클래스로 등록해두고 속성에 이를 추가한다) */
+    $('#bt7').on('click', function(){
+    	$('#img1').removeClass('classA');
+    	$('#img1').addClass('classB');
+    	
+    })
+    /* 8번버튼 (removeClass() : css를 클래스로 등록해두고 속성에 이를 추가한다) */
+    $('#bt8').on('click', function(){
+    	$('#img1').removeClass('classB');
+    	$('#img1').addClass('classA');
+    	
+    })
+})
+
+</script>
+<style>
+    .classA {
+        width : 100px;
+        height : 100px;
+        border : 3px solid blue;
+    }
+    .classB {
+        width : 300px;
+        height : 300px;
+        border : 3px dotted red;
+    }
+</style>
+</head>
+<body>
+<h2>[ jQuery의 문서 객체 조작 메소드 ]</h2>
+
+<pre>
+    html(), text(), val(), attr(), css(), addClass(), removeClass()
+    앞 5개가 문서를 고치는 메소드들...
+</pre>
+
+<p><input type="button" id="bt1" value="html() 함수"></p>
+<p><input type="button" id="bt2" value="text() 함수"></p>
+<p><input type="button" id="bt3" value="val() 함수"></p>
+
+<h2><b>h2</b>태그를 사용한 문자열 1</h2>
+<h2><i>h2</i>태그를 사용한 문자열 2</h2>
+<p><input type="text" id="text1"></p>
+
+<hr>
+
+<p>[ 문서의 값 변경 ]</p>
+<p><input type="button" id="bt4" value="값 변경"></p>
+<div id="div1">원래 내용</div>
+<div id="div2">원래 내용</div>
+<p><input type="text" id="text2" value="원래 내용"></p>
+
+<br>
+
+<p><input type="button" id="bt5" value="attr()함수"></p>
+<p><input type="button" id="bt6" value="css()함수"></p>
+
+<p><input type="button" id="bt7" value="addClass() 함수"></p>
+<p><input type="button" id="bt8" value="removeClass() 함수"></p>
+<p><img th:src="@{/image/mokoko_young.png}" id="img1" class="classA"></p>
+</body>
+</html>

@@ -1,0 +1,109 @@
+package net.softsociety.web.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
+import net.softsociety.web.domain.Person;
+
+@RequestMapping("aj")
+@Controller
+@Slf4j
+public class AjaxController {
+	//aj1페이지
+	@GetMapping("aj1")
+	public String aj1() {
+		return "/ajaxView/aj1";
+	}
+	
+	/* Ajax의 경우 return의 의미가 다르다. 
+	 * 리턴값이 있더라도, 리턴은 돌아가는 경로가 아니다. (진짜 가져가는 결과값을 뜻함)
+	 * @ResponseBody는 호출한 곳으로 다시 데이터를 보내준다는 뜻.
+	 */
+	@ResponseBody
+	@GetMapping("test1")
+	public void test1() {
+		log.debug("컨트롤러의 test1()실행");
+	}
+	
+	/*
+	 * 보낼때, 받을때의 파라미터 명이 같으면 된다.
+	 */
+	@ResponseBody
+	@PostMapping("test2")
+	public void test2(String str) {
+		log.debug("전달 받은 문자열 : {}", str);
+	}
+	
+	/*
+	 * 요청 받을 때, return으로 데이터를 보내준다.
+	 * 성공했을 때, 실행할 함수의 파라미터로 보내진다.
+	 */
+	@ResponseBody
+	@GetMapping("test3")
+	public String test3() {
+		String s = "서버에서 보낸 문자열";
+		return s;
+	}
+	
+	/*
+	 * [연습1]
+	 * 가져오고 다시 보내고
+	 */
+	@ResponseBody
+	@PostMapping("test4")
+	public String test4(String str) {
+		log.debug("전달 받은 문자열 : {}", str);
+		String res = str.toUpperCase();
+		return res;
+	}
+	
+	//aj2페이지
+	@GetMapping("aj2")
+	public String aj2() {
+		return "/ajaxView/aj2";
+	}
+	/*
+	 * 각 파라미터를 따로따로 받기
+	 */
+	@ResponseBody
+	@PostMapping("insert1")
+	public void insert1(String name, int age, String phone) {
+		log.debug("전달 받은 이름: {}, 나이: {}, 전화번호: {}", name, age, phone);
+		return;
+	}
+	
+	/*
+	 * 객체로 하기
+	 * 파라미터를 객체로 설정하면 바로 객체로 전달된다.(보낼때 ajax에서 이름을 잘 맞춰야한다. ??? : ??? 앞쪽부분을 객체와 동일시)
+	 */
+	@ResponseBody
+	@PostMapping("insert2")
+	public void insert2(Person p) {
+		log.debug("전달 받은 객체: {}", p);
+		return;
+	}
+	
+	/*
+	 * 폼 자체를 객체로 받기
+	 */
+	@ResponseBody
+	@PostMapping("insert3")
+	public void insert3(Person p) {
+		log.debug("전달 받은 객체: {}", p);
+		return;
+	}
+	
+	/*
+	 * 서버에서 객체를 string으로 보내기
+	 */
+	@ResponseBody
+	@GetMapping("getObject1")
+	public String getObject1() {
+		Person p = new Person('홍길동', 22, "123-456-7890");
+		return;
+	}
+}

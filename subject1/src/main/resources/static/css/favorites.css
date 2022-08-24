@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+div.listContainer > table {
+	width: 900px;
+	text-align: center;
+	box-shadow: 2px 2px 5px gray;
+}
+
+div.button {
+	width: 890px;
+	text-align: center;
+}
+
+th {
+	background-color: skyblue;
+	border : 1px dashed gray;
+}
+
+td {
+	border : 1px dashed gray;
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Javascript</title>
+<style>
+	input[type="text"]{
+		width: 40px;
+	}
+	input[type="button"]{
+		margin: 0 0 0 40px;
+	}
+</style>
+
+<script type="text/javascript">
+//	alert('1');
+
+	//window.onload는 데이터들을 읽어오고 화면에 띄운 직후에 실행됨. 
+	//이 예제에서는 1 -> 3 -> 4 -> 2 순으로 실행됨.
+	//때문에 body 맨 아래에 script를 넣는 이유가, 화면 실행 후에 js를 실행하기 위해..
+	//헤드에 넣는 경우의 window.onload와 같다.
+	window.onload = function() {
+		alert('2');
+		let bt1 = document.getElementById('bt1');
+		bt1.onclick = test1; //여기서 bt1.onclick = test1();이라고 괄호를 치면, 누르기 전에도 한번 무조건 실행함...
+	}
+
+	//js를 쓰고싶을 때만 호출하는 경우: 함수를 선언하고 그때그때 호출한다.
+	function test1(){
+		alert('test1 실행');
+	}
+
+	//변수와 자료형
+	function test2(){
+		var a = 1;	/*옛날 버전 : var의 경우 재정의가 가능하다. (변수명의 중복이 가능하다.. 이로인한 문제가 발생하여 let을 개발함) 
+					호이스팅이 가능하다(먼저 호출하고 뒤에 선언하는 경우)*/
+		let b = 2;	//최근 버전 : 재정의가 안되기 때문에 오류날 가능성이 var보다 적다.
+		const c =3; //java의 final과 같다
+
+		console.log('a = ' + a);
+		console.log('b = ' + b);
+		console.log('c = ' + c);
+
+		//재선언
+		var a = "abc";			//var는 재선언이 가능하다.
+		// let b = "def";		//let b는 이름의 중복이 불가하기 때문에 오류가 난다.
+		// const c = "ghi"; 	//const c는 상수이기 때문에 오류가 난다.
+		console.log('a = ' + a);
+		/* console.log('b = ' + b);
+		   console.log('c = ' + c);*/
+
+		//새로 대입하기
+		a = 'zxc';
+		b = 'cvb';
+		// c = 'bnm';			//새로 대입하는 것은 const만 불가하다.
+		console.log('a = ' + a);
+		console.log('b = ' + b);
+		// console.log('c = ' + c);
+
+		//자료형의 확인
+		console.log(typeof(a));	//string
+		console.log(typeof(b)); //string
+		console.log(typeof(c)); //number
+		
+		//숫자인지 아닌지
+		console.log(isNaN(a));
+		console.log(isNaN("1"));
+		console.log(isNaN(c));
+		
+		//화면에 무엇인가 띄우는것
+		let d = prompt("숫자를 입력하세요.");
+		console.log(typeof(d) + ', ' + d); //스트링
+		
+		let e = confirm('질문 내용?');
+		console.log(typeof(e) + ', ' + e); // 확인 or 취소
+		
+		//문자열 연결 및 숫자로 형변환.
+		console.log(d + 1);
+		console.log(parseInt(d) + 3);
+		console.log(Number(d) + 1);
+	}
+	
+	// function test3() {
+	// 	/*let t1 = document.getElementById('text1').value; 는 인풋태그 안의 value를 가르킴. 대신 이렇게하면 값을 수정해도 input tag와는 무관함...
+	// 	때문에, 우선 value가 아닌 태그 자체를 넣는다 */
+	// 	let t1 = document.getElementById('text1');
+	// 	let t2 = document.getElementById('text2');
+	// 	let t3 = document.getElementById('text3');
+	// 	let t4 = document.getElementById('output');
+
+	// 	t3.value = Number(t1.value) + Number(t2.value);
+
+	// 	//span 태그 사이에 넣는 경우
+	// 	t4.innerHTML = t3.value;
+	// }
+	
+	//text부분 선택시 내용 전체 드래그 (1,2 구분은 보내온 this를 참조한다.)
+	function focusIn(ob){
+	/*	이렇게 해도 되고
+		let text = document.getElementById(ob.id);
+		text.select(); */
+		ob.select();
+	}
+	
+	//계산기의 계산부
+	function calc(){
+		let t1 = document.getElementById('text1');
+		let t2 = document.getElementById('text2');
+		let t3 = document.getElementById('text3');
+		let select = document.getElementById('calc');
+		let temp;
+		
+		//공백제거는 따로 해줘야한다.(trim 사용)
+		//첫번째 입력란에 숫자를 입력했는가.
+		if(t1.value == '' || isNaN(t1.value)){
+			alert("숫자를 올바르게 기입하세요.");
+			t1.focus();
+			t1.select();
+			return;
+		}
+		
+		//두번째 입력란에 숫자를 입력했는가.
+		if(t2.value == '' || isNaN(t2.value)){
+			alert("숫자를 올바르게 기입하세요.");
+			t2.focus();
+			t2.select();
+			return;
+		}
+
+		//입력한 문자를 숫자로 변환
+		let num1 = Number(t1.value);
+		let num2 = Number(t2.value);
+
+
+		console.log(select.value);			// +, -, *, /
+		console.log(select.selectedIndex);  // 0, 1, 2, 3
+		
+		switch(select.value){
+			case '+' : temp = num1 + num2; break;
+			case '-' : temp = num1 - num2; break;
+			case '*' : temp = num1 * num2; break;
+			case '/' : temp = num1 / num2; break;
+		}
+		t3.value = temp;
+	}
+	
+	//리셋버튼
+	function reset(){
+		let t1 = document.getElementById('text1');
+		let t2 = document.getElementById('text2');
+		let t3 = document.getElementById('text3');
+		
+		t1.value = 0;
+		t2.value = 0;
+		t3.value = 0;
+	}
+</script>
+</head>
+
+
+<body>
+<!-- <script type="text/javascript">
+	alert('3');
+</script> -->
+
+	<h2>[ Javascript 기본 문법 ]</h2>
+	<p><a href="javascript:test1()">a태그로 함수 호출</a></p>
+	<p><input type="button" value="onclick속성의 input tag로 함수 호출" onclick="test1()"></p>
+	<p><input type="button" value="onload에서 이벤트 연결" id="bt1"></p>
+	<hr>
+<!-- <script type="text/javascript">
+	alert('4');
+</script> -->
+
+	<!-- console.log 사용하여 변수와 자료형 보기 -->
+	<p><a href="javascript:test2()">변수와 자료형(콘솔창)</a></p>
+	<hr>
+
+	<!--
+	<p><a href="javascript:test3()">계산</a></p>
+	<p>
+		<input type="text" id="text1">
+		<input type="text" id="text2">
+		<input type="text" id="text3">
+		<span id="output"></span>
+	</p>-->
+
+	<!-- 계산기 -->
+	<h2>[ 계산기 ]</h2>
+	<p>
+		<input type="text" id="text1" onfocus="focusIn(this)" value="0">
+		<select name="calc" id="calc" onchange="calc()"> <!-- onchange는 해당 태그의 상태가 바뀔때마다 특정 행동을함. 여기선 바뀌면 자동으로 계산한다. -->
+			<option value="+" selected>+</option>
+			<option value="-">-</option>
+			<option value="*">*</option>
+			<option value="/">/</option>
+		</select>
+		<input type="text" id="text2" onfocus="focusIn(this)" value="0">
+		<span>=</span>
+		<input type="text" id="text3" value="0" readonly="readonly">
+	</p>
+	<p>
+		<input type="button" id="submit" onclick="calc()" value="계산">
+		<input type="button" id="reset" onclick="reset()" value="초기화">
+	</p>
+</body>
+</html>

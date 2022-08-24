@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('*').css('text-align', 'left');
+    $('#btn').css('text-align', 'center');
+})
+</script>
+</head>
+<body>
+	<h1>[ 로그인 ]</h1>
+	
+		<form th:action="@{/member/login}" method="post">
+			<table class="loginTable">
+				<tr>
+					<th>ID</th>
+					<td><input type="text" id="memberid" name="memberid"></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input type="password" id="memberpw" name="memberpw"></td>
+				</tr>
+				<tr>
+					<td colspan="2" id="btn">
+						<input type="submit" value="Login">
+					</td>
+				</tr>
+			</table>
+		</form>
+</body>
+</html>

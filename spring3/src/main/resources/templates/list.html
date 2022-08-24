@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>목록</title>
+<style>
+	table{
+		width : 500px;
+		text-align: center;
+		border-collapse : collapse;
+	}
+</style>
+<script type="text/javascript">
+	function deletePerson(name){
+		if(confirm('정말 삭제하시겠습니까?')){
+			location.href = 'delete?name=' + name;
+		}
+	}
+	function updatePerson(name){
+		location.href='update?name=' + name;
+	}
+	
+</script>
+</head>
+<body>
+	<div class="container">
+		<h2>전체 목록</h2>
+		<table border=1>
+			<thead>
+                <tr>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+      		<tr th:each="item : ${list}">
+         		<td th:text="${item.name}"></td>
+         		<td th:text="${item.age}"></td>
+         		<td><input type="button" value="수정" th:pname="${item.name}"
+         			th:onclick="updatePerson(this.getAttribute('pname'))">
+         		</td>
+         		<td><input type="button" value="삭제" th:pname="${item.name}"
+         			th:onclick="deletePerson(this.getAttribute('pname'))">
+         			<a th:href="|javascript:location.href='delete?name=${item.name}'|">삭제</a>
+         		</td>
+      		</tr>
+   		</table>
+	</div>
+</body>
+</html>

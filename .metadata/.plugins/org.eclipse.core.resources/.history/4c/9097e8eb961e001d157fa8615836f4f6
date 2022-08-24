@@ -1,0 +1,5 @@
+package net.softsociety.web.service;
+
+public interface CommentService {
+	public int insert
+}

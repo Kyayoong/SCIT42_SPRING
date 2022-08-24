@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="container">
+		<h1>[ Spring 2 - 서버와 값 주고 받기 ]</h1>
+		<ul>
+			<li><a href="param/param1">GET method parameter1 전달하기</a></li>
+			<li><a href="param/param2">POST method parameter 전달하기</a></li>
+			<li><a href="param/param3">GET method로 객체 전달하기</a></li>
+			<li><a href="param/param4?name=abc&age=10">GET method로 객체 전달하기(form 없이)</a></li>
+		</ul>
+			<hr>
+		<ul>
+			<li><a href="model/model1">Model 사용하기</a></li>  <!-- 일시적 -->
+			<li><a href="ss/session1">Session 저장</a></li> <!-- 지속적 ex)로그인 정보 등 -->
+			<li><a href="ss/session2">Session 읽기</a></li>
+			<li><a href="ss/session3">Session 삭제</a></li>
+		</ul>
+	</div>
+</body>
+</html>

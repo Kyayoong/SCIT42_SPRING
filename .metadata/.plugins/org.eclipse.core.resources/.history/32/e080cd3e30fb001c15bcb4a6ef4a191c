@@ -1,0 +1,9 @@
+div.container{
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+ul {
+    padding: 0 0 0 0;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thmeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/memberView/loginForm.css}">
+</head>
+<body>
+
+<div class="container">
+	<h1>[ 로그인 ]</h1>
+	<section>
+		<!-- @{/member/login}은 security config에 .loginProcessingUrl("/member/login").permitAll()로 담긴다. -->
+		<form th:action="@{/member/login}" method="post">
+			<table class="login">
+			<tr>
+				<th><label for="memberid">아이디</label></th>
+				<td>
+					<input type="text" name="memberid" id="memberid">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="memberpw">비밀번호</label></th>
+				<td>
+					<input type="password" name="memberpw" id="memberpw">
+				</td>
+			</tr>
+			<tr>
+				<td class="white"></td>
+				<td class="white">
+					<div class="errorMsg" th:if="${param.error}">아이디 혹은 비밀번호가 틀립니다.</div>
+				</td>
+			</tr>
+			
+			<tr>
+				<th colspan="2">
+					<input type="submit" value="로그인">&nbsp;
+					<input type="button" value="이전으로" onclick="location.href='/spring5'">&nbsp;
+				</th>
+			</tr>
+			</table>
+		</form>
+	</section>
+</div>
+
+<!-- 퀵메뉴 넣고 누구나 홈화면으로 가기 가능 -->
+<div class="quickMenu">
+	<p>[Quick Menu]</p>
+	<p><input type="button" value="HOME" onclick="location.href='/spring5'"></p>
+</div>
+
+</body>
+</html>

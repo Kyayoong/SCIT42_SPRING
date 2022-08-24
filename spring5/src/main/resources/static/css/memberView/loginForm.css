@@ -1,0 +1,67 @@
+@charset "UTF-8";
+div.container{
+    width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+table{
+	width: 500px;
+	margin: 0 auto;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+input[type="text"], input[type="password"] {
+	margin: 0 0 0 30px;
+	width: 250px;
+}
+
+div.errorMsg{
+	color: red;
+}
+
+input[type="submit"], input[type="reset"], input[type="button"]{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: black; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+	margin-top: 20px;
+}
+
+input[type="submit"]:active, input[type="reset"]:active{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover{
+	height:30px;
+	width: 80px;
+	color: black;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+div.quickMenu {
+	border: 1px dashed black;
+	text-align: center;
+	width: 150px;
+	height: 200px;
+	background-color: lightgray;
+   	position: fixed; /* 기준점 : 전체 모니터를 기준으로 해당 위치에 고정시킴. ==> 스크롤해도 그 위치로 따라온다. */
+    bottom: 400px;
+    right: 100px;
+}

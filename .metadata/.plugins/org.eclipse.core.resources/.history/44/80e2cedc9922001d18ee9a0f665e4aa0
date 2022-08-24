@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('*').css('text-align', 'left');
+    $('#btn').css('text-align', 'center');
+})
+//join validation
+function validation(){
+	let form = $('#joinForm')
+	let memberid = $('#memberid').val();
+	let memberpw = $('#memberpw').val();
+	let membername = $('#membername').val();
+	let phone = $('#phone').val();
+
+	if(memberid.length <3 || memberid.length >10){
+		alert('ID는 3~10글자로 입력하세요.');
+		$('#memberid').select();
+		return false;
+	}
+	if(memberpw.length <3 || memberpw.length >10){
+		alert('비밀번호는 3~10글자로 입력하세요.');
+		$('#memberpw').select();
+		return false;
+	}
+	if(membername == ''){
+		alert('이름을 입력해주세요');
+		$('#membername').select();
+		return false;
+	} else if(membername.length > 5){
+		alert('이름은 5글자 이내로 입력해주세요.');
+		$('#membername').select();
+		return false;
+	}
+	
+	if(phone.length == 0){
+		alert('전화번호를 입력하세요.');
+		$('#phone').select();
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<h1>[ 회원가입 ]</h1>
+	
+	<form th:action="@{/member/join}" method="post" id="joinForm" onsubmit="return validation()">
+		
+	</form>
+	
+</body>
+</html>

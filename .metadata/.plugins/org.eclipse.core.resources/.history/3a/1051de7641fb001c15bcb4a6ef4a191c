@@ -1,0 +1,7 @@
+package net.softsociety.spring2.vo;
+
+public class PersonVO {
+	String name;
+	String service;
+	String phone
+}

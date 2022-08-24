@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../static/css/test.css" th:href="@{/css/test.css}">
+<script src="../../static/js/test.js" th:src="@{/js/test.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>[ Thymeleaf 문법1 ]</h2>
+		<h3>Model을 이용한 값 출력</h3>
+		
+		<p>[[${str}]]</p>
+		<p>[[${num}]]</p>
+		<p>[[${member}]]</p>
+		<p>[[${member.id}]]</p>
+		<p>[[${member.name}]]</p>
+		<p>[[${member.password}]]</p>
+		<p>[[${member.address}]]</p>
+		<p>[[${tag}]]</p>
+		<p>[[${url}]]</p>
+		
+		<hr>
+		
+		<h3>thymeleaf를 이용한 출력(text)</h3>
+		<!-- text는 특수문자를 따로 처리함 -->
+		<p th:text="${str}">문자열(text)</p>
+		<p th:text="${tag}">태그(text)</p> <!-- '<'는 &lt, '>'는 &gt로 변환됨 -->
+		<p th:text="${num}">숫자(text)</p>
+		<h3>thymeleaf를 이용한 출력(utext)</h3>
+		<!-- utext는 특수문자를 있는 그대로 받아옴 -->
+		<p th:utext="${str}">문자열(utext)</p>
+		<p th:utext="${tag}">태그(utext)</p>
+		
+		<hr>
+		
+		<h3>주석</h3>
+		<p>페이지 소스보기 참조</p>
+		<!-- 주석은 영역 선택 후 컨+쉬+슬. 해제는 컨+쉬+역슬 -->
+		<!-- <p>[[${str}]]</p> -->
+		<!-- <p th:text="${str}"></p> -->
+		<!--/* <p>[[${str}]]</p> */--> <!-- /**/이거 붙히면 페이지 소스보기에서도 안보임. -->
+		<!--/* <p th:text="${str}"></p> */-->
+		
+		<hr>
+		
+		<h3>연산자</h3>
+		<p>1. 더하기</p>
+		<p>[[${num + 1}]]</p>
+		<p th:text="${num + 1}">num + 1</p>
+		<br>
+		<p>2. 빼기</p>
+		<p>[[${num - 1}]]</p>
+		<p th:text="${num - 1}">num - 1</p>
+		<br>
+		<p>3. 곱하기</p>
+		<p>[[${num * 2}]]</p>
+		<p th:text="${num * 2}">num * 2</p>
+		<br>
+		<p>4. 나누기</p>
+		<p>[[${num / 2}]]</p>
+		<p th:text="${num / 2}">num / 2</p>
+		<br>
+		<p>5. 나머지 구하기</p>
+		<p>[[${num % 3}]]</p>
+		<p th:text="${num % 3}">num % 3</p>
+		<br>
+		<p>6. 비교연산 gt</p>
+		<p>[[${num > 99}]]</p>
+		<p th:text="${num > 99}">num > 99</p>
+		<p>[[${num gt 99}]]</p>
+		<p th:text="${num gt 99}">num gt 99</p>
+		<br>
+		<p>7. 비교연산 lt</p>
+		<p>[[${num lt 99}]]</p>
+		<p th:text="${num lt 99}">num lt 99</p>
+		<br>
+		<p>8. 비교연산 ge</p>
+		<p>[[${num ge 99}]]</p>
+		<p th:text="${num ge 99}">num ge 99</p>
+		<br>
+		<p>9. 비교연산 le</p>
+		<p>[[${num le 99}]]</p>
+		<p th:text="${num le 99}">num le 99</p>
+		<br>
+		<p>10. 비교연산 eq</p>
+		<p>[[${num eq 99}]]</p>
+		<p th:text="${num eq 99}">num eq 99</p>
+		<br>
+		<p>11. 비교연산 ne</p>
+		<p>[[${num ne 99}]]</p>
+		<p th:text="${num ne 99}">num ne 99</p>
+		<br>
+		<p>12. 논리연산</p>
+		<p>[[${num ge 1 and num le 10}]]</p>
+		<p th:text="${num ge 1 and num le 10}">연산자</p>
+		<p>[[${num %3 == 0 or num % 5 == 0}]]</p>
+		<p th:text="${num %3 == 0 or num % 5 == 0}">연산자</p>
+		
+		<hr>
+		
+		<h3>13.객체 출력</h3>
+		<p th:text="${member}">객체출력1</p>
+		<p th:text="${member.id}">객체출력1</p>
+		<p th:text="${member.name}">객체출력1</p>
+		<p>- th object를 이용한 객체출력</p>
+		<ul th:object="${member}">
+			<li th:text="*{id}">아이디</li>
+			<li th:text="*{name}">이름</li>
+			<li th:text="*{password}">비밀번호</li>
+		</ul>
+		
+		<hr>
+		
+		<h3>경로 생성과 하이퍼 링크</h3>
+		<p><a href="http://www.naver.com">네이버로 이동(일반)</a></p>
+		<!-- 서버에서는 구글, html에서는 네이버로 이동. href와 th를 같이 이용하여 기본 값을 지정할 수 있다. -->
+		<p><a href="http://www.naver.com" th:href="${url}">구글로 이동 (객체), html에서는 네이버로 이동...</a></p>
+		<p>절대경로 생성 : [[@{/param/param1}]] (골뱅이를 썼기 때문에 /param/param1인데 루트로 간다.)</p>
+		<p><a href="/param/param1" th:href="@{/param/param1}">페이지로 이동(절대경로)</a></p>
+		<!-- 
+			1. 이미지 파일을 /static/img 폴더에 저장하고 불러온다
+			2. css파일을 /static/css폴더에 저장하고 불러온다
+			3. javascript파일을 /static/js폴더에 저장하고 불러와서 함수 호출
+		 -->
+		 <p>-- 절대 경로로 이미지 불러오기 --</p>
+		 <p><img alt="모코코 이미지" src="../../static/img/mokoko05.png" th:src="@{/img/mokoko05.png}"></p>
+		 
+		 <p>-- 절대 경로로 css 불러오기 (head쪽 참조) --</p>
+		 <p>-- 절대 경로로 자바스크립트 불러오기 (head쪽 참조) --</p>
+		 <p><a href="javascript:func()">자바스크립트 func()함수 호출</a></p>
+		
+		<hr>
+		
+		<h3>포맷 지정하기</h3>
+		<p th:text="${inum}"></p>
+		<p th:text="${dnum}"></p>
+		<p th:text="${date}"></p>
+		
+		<p th:text="${#numbers.formatInteger(inum, 10)}"></p>
+		<p th:text="${#numbers.formatInteger(inum, 3, 'COMMA')}"></p>
+		<p th:text="${#numbers.formatDecimal(dnum, 3, 'COMMA', 2, 'POINT')}"></p>
+		<p th:text="${#numbers.formatPercent(dnum, 0, 2)}"></p>
+		<p th:text="${#dates.format(date, 'yyyy/MM/dd HH:mm')}"></p>
+						
+		<hr>
+		<h3>Reference</h3>
+		<p><a href="https://velog.io/@won-developer/Thymeleaf-기본기능-정복하기">참조 사이트</a></p>
+	</div>
+</body>
+</html>

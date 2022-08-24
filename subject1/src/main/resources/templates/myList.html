@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/favorites.css">
+<script type="text/javascript">
+function itemDelete(n) {
+	let num = document.getElementById('orderNum');
+	let form = document.getElementById('deleteForm');
+	
+	num.value = n;
+	form.submit();
+	
+}
+</script>
+</head>
+<body>
+
+	<!-- 삭제용 폼 -->
+	<form th:action="@{/deleteList}" method="post" id="deleteForm">
+		<input type="hidden" name="orderNum" value="0" id="orderNum">
+	</form>
+	
+	<h1>장바구니 목록</h1>
+	
+	<div class="listContainer">
+	<table>
+		<tr>
+			<th>주문번호</th>
+			<th>제품번호</th>
+			<th>아이디</th>
+			<th>이름</th>
+			<th>주소</th>
+			<th>제품이름</th>
+			<th>수량</th>
+			<th>가격</th>
+			<th>삭제버튼</th>
+		</tr>
+		
+		<tr th:each="item:${list}">
+			<td th:text="${item.order_num}">제품번호</td>
+			<td th:text="${item.num}">제품번호</td>
+			<td th:text="${item.id}">아이디</td>
+			<td th:text="${item.name}">이름</td>
+			<td th:text="${item.address}">주소</td>
+			<td th:text="${item.p_name}">제품이름</td>
+			<td th:text="${item.p_amount}">제품재고</td>
+			<td th:text="${item.p_price}">제품가격</td>
+			<td><input type="button" value="삭제하기" th:num="${item.order_num}" onclick="itemDelete(this.getAttribute('num'))"></td>
+		</tr>
+	</table>
+	
+	<hr>
+	<!-- 장바구니 페이지에서 홈 혹은 쇼핑목록 페이지로 이동하는 버튼 -->
+	<div class="button">
+	<input type="button" value="홈화면" th:onclick="|location.href='@{/}'|">
+	<input type="button" value="쇼핑하기" th:onclick="|location.href='@{/shop}'|">
+	</div>
+	</div>
+</body>
+</html>

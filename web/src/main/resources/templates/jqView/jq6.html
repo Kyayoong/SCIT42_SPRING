@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<style type="text/css">
+	#textDiv{
+        background-color: #dddddd;
+        border: 2px solid black;
+        width: 200px;
+        height: 200px;
+        font-size: 20px;
+        margin: 0 auto;
+	}   
+</style>
+
+
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    
+    //show
+    $('#bt1').click(function (){
+        //show(속도); 대상을 보여준다.
+    	$('#textDiv').show('slow');
+    });
+    
+    //hide
+    $('#bt2').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').hide('slow');
+    });
+    
+    //toggle
+    $('#bt3').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').toggle('slow');
+    });
+    
+    //slideDown
+    $('#bt4').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').slideDown('fast');
+    });
+    
+    //slideUp
+    $('#bt5').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').slideUp('fast');
+    });
+    
+    //fadeIn
+    $('#bt6').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').fadeIn('fast');
+    });
+    
+    //fadeOut
+    $('#bt7').click(function (){
+        //hide(속도); 대상을 숨긴다.
+    	$('#textDiv').fadeOut('fast');
+    });
+    
+})
+
+
+</script>
+</head>
+<body>
+<h2>[ jQuery의 효과 ]</h2>
+	<p>
+        <input type="button" value="show()" id="bt1">
+        <input type="button" value="hide()" id="bt2">
+        <input type="button" value="toggle()" id="bt3">
+        <input type="button" value="slideDown()" id="bt4">
+        <input type="button" value="slideUp()" id="bt5">
+        <input type="button" value="fadeIn()" id="bt6">
+        <input type="button" value="fadeOut()" id="bt7">
+    </p>
+
+    <div id="textDiv">
+        <p>div 내 문자열</p>
+        <p>div 내 문자열</p>
+        <p>div 내 문자열</p>
+    </div>
+
+</body>
+</html>

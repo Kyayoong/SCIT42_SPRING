@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Javascript 내장 객체</title>
+<script>
+let win = null;
+function test1() {
+    //새창열기(경로, 창이름[같은 이름의 창은 두개가 열리지 않는다.], 속성). 
+    //let win을 통해 불러온 쪽에서 제어 가능하다. 이건 지역으로 선언하면 다른 함수에서는 사용 불가...
+    win = window.open('/web', 'win', 'width=300, height=200, left=400, top=200');
+}
+
+function test2() {
+    //먼저 안열렸는데 닫는 경우 null, 열린 경우 object window
+    alert(win);
+    //창이 닫힌 상황인가? 열려있으면 false 닫힌경우 true
+    alert(win.closed);
+
+    //새창 닫기. win은 전역변수이기 때문에 여기서도 제어가 가능해진다.
+    win.close();
+    alert(win.closed); //true
+}
+
+function test3(){
+	//창이 열렸는지 확인하기.
+	if(win == null || win.closed){
+		alert("창 안열림")
+		return;
+	}
+	//사이즈 변경(To는 지정 크기로 변환. By는 기존 크기에 지정 크기를 더한 만큼으로 변환)
+    win.resizeTo(screen.width/2, screen.height/2);
+	//위치 변경(To는 지정 위치로 이동. By는 기존 위치에 지정 위치를 더한 만큼으로 이동)
+	win.moveTo(screen.width/4, screen.height/4);
+	//윈도우 포커스 주기
+	win.focus();
+}
+
+//screen
+function test4(){
+	//화면의 크기와 여러 정보를 알 수 있는 screen 객체
+    console.log('width = ' + screen.width + ', height = ' + screen.height);
+}
+//location
+function test5(){
+    //현재 경로 정보
+	console.log('경로 = ' + location.href);
+    //새로고침
+    //location.reload();
+    if(confirm('네이버로 이동하시겠습니까?')){
+		location.href = 'http://www.naver.com';
+    }
+}
+//history
+function test6(){
+	//현재위치 바로 전, -2면 전전 단계.
+	history.go(-1);
+}
+//navigator
+function test7(){
+    //모바일인지 확인할 Array
+    let mobiles = ['MOBILE', 'SAMSUNG', 'IPHONE'];
+	let res = document.getElementById('result');
+    //res.innerHTML = '결과값 = ' + navigator.userAgent;
+
+	//브라우저와 os의 종합 정보를 가져온다.
+    // res.innerHTML = '결과값 : ' + navigator.userAgent;
+	// console.log(navigator.userAgent);
+    alert(navigator.userAgent);
+
+    //해당 정보를 upper로 바꾸어 저장 후 해당 문자열에 mobiles의 단어들 중 하나라도 포함되어있으면 모바일 화면으로 바뀐다.
+    let info = navigator.userAgent.toUpperCase();
+    for(let i = 0; i < mobiles.length; i++){
+        if(info.includes(mobiles[i])){
+            location.href='mobile';
+        }
+    }
+}
+</script>
+
+</head>
+<body>
+<h2>[ Javascript 내장 객체 ]</h2>
+<ol>
+    <li> window
+        <ul>
+            <li><p><a href="javascript:test1()">window 객체1 - 창열기</a></p></li>
+            <li><p><a href="javascript:test2()">window 객체2 - 창닫기</a></p></li>
+            <li><p><a href="javascript:test3()">window 객체3 - 창크기, 위치 변경</a></p></li>
+        </ul>
+    </li>
+    <li> screen
+        <ul>
+            <li>
+                <p><a href="javascript:test4()">screen 객체</a></p>
+            </li>
+        </ul>
+    </li>
+    <li> location
+        <ul>
+            <li>
+                <p><a href="javascript:test5()">location 객체</a></p>
+            </li>
+        </ul>
+    </li>
+    <li> history
+        <ul>
+            <li>
+                <p><a href="javascript:test6()">history 객체</a></p>
+            </li>
+        </ul>
+    </li>
+    <li> navigator
+        <ul>
+            <li>
+                <p><a href="javascript:test7()">navigator 객체</a><span id="result"></span></p>
+            </li>
+        </ul>
+    </li>
+</ol>
+</body>
+</html>

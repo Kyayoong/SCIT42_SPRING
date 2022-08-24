@@ -1,0 +1,53 @@
+package net.softsociety.exam.service;
+
+import java.util.ArrayList;
+
+import net.softsociety.exam.domain.Board;
+import net.softsociety.exam.domain.Reply;
+
+public interface BoardService {
+
+	/**
+	 * 저장된 게시글을 가져오는 메소드
+	 * @return list : 가져온 저장글 목록
+	 */
+	public ArrayList<Board> selectAllBoard();
+	
+	/**
+	 * 게시글 저장하는 메소드
+	 * @param board : 저장할 게시글 객체
+	 * @return 성공여부
+	 */
+	public int insertBoard(Board board);
+	
+	/**
+	 * 하나의 게시글을 가져오는 메소드
+	 * @param boardnum : 가져올 게시글의 번호
+	 * @return 게시글 정보
+	 */
+	public Board selectBoard(int boardnum);
+	
+	/**
+	 * 게시글을 삭제하는 메소드
+	 * @param boardnum : 삭제할 게시글 번호
+	 * @param memberid : 작성자 확인용 파라미터
+	 * @return 삭제결과
+	 */
+	public int deleteBoard(int boardnum, String memberid);
+	
+	/**
+	 * 게시글의 리플 내용을 가져오는 메소드
+	 * @param boardnum : 리플 가져올 게시글 번호
+	 * @return
+	 */
+	public ArrayList<Reply> selectAllReply(int boardnum);
+	
+	/**
+	 * 댓글 저장 메소드
+	 * @param reply : 저장할 댓글 객체
+	 * @return
+	 */
+	public int replyWrite(Reply reply);
+
+
+}

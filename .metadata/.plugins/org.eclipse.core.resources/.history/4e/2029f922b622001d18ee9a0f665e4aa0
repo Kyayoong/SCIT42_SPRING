@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.table').css('text-align', 'center');
+	$('.hdtitle').css('width', '500px');
+	$('.container').css('border', '1px solid black');
+	$('.container').css('width', '650px');
+	
+	reloadPage();
+	$('#type').change(search);
+})
+
+function reloadPage(){
+	$.ajax({
+		url: 'searchLoad',
+		Type: 'get',
+		dataType: 'json',
+		success: output,
+		error: function(e){
+			alert(JSON.stringify(e));
+		}
+	})
+}
+
+function search(){
+	$.ajax({
+		url: 'search'
+	})
+}
+
+let table = '<table style="text-align:center;"><tr><th>번호</th><th>카테고리</th><th style="width: 500px;">제목</th></tr>';
+function output(msg){
+	$.each(msg, function(i, list){
+		table += '<tr>';
+		table += '<td>' + list.boardnum + '</td>';
+		table += '<td>' + list.category + '</td>';
+		table += '<td>' + list.title + '</td>';
+		table += '</tr>';
+	})
+	table += '</table>';
+	$('#result').html(table);
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>[ 판매 상품 검색 ]</h1>
+
+		<!-- <form id="pagingForm" th:action="@{/board/list}" method="get">
+			<select name="type" id="type">
+				<option value="전체" th:selected="${type} == 'all'">전체</option>
+				<option value="컴퓨터 밎 주변기기" th:selected="${type} == 'computer'">컴퓨터
+					및 주변기기</option>
+				<option value="카메라" th:selected="${type} == 'camera'">카메라</option>
+				<option value="자동차" th:selected="${type} == 'car'">자동차</option>
+			</select> 
+			<input type="text" name="searchWord" th:value="${searchWord}">
+		</form> -->
+
+		<select name="type" id="type">
+			<option value="all" th:selected="${type} == 'all'">전체</option>
+			<option value="computer" th:selected="${type} == 'computer'">컴퓨터
+				및 주변기기</option>
+			<option value="camera" th:selected="${type} == 'camera'">카메라</option>
+			<option value="car" th:selected="${type} == 'car'">자동차</option>
+		</select> 
+		<input type="text" name="searchWord" th:value="${searchWord}">
+
+		<div id="result"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+package net.softsociety.web.dao;
+
+public interface CommentDAO {
+
+}

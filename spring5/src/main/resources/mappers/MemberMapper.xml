@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <!-- net.softsociety.spring5.dao.MemberDAO -->
+ <mapper namespace="net.softsociety.spring5.dao.MemberDAO">
+ 	<!-- 회원 정보 저장 -->
+ 	<insert id="insertMember" parameterType="Member">
+ 		INSERT INTO SPRING5_MEMBER
+ 		(MEMBERID, MEMBERPW, MEMBERNAME, EMAIL, PHONE, ADDRESS)
+ 		VALUES
+ 		(#{memberid}, #{memberpw}, #{membername}, #{email}, #{phone}, #{address})
+ 	</insert>
+ 	
+ 	<!-- 회원정보 조회 -->
+ 	<select id="selectOne" parameterType="string" resultType="Member">
+ 		SELECT * 
+ 		FROM SPRING5_MEMBER 
+ 		WHERE MEMBERID = #{memberid}
+ 	</select>
+ 	
+ 	<!-- 회원정보 업데이트 -->
+ 	<update id="updateUser" parameterType="Member">
+ 		UPDATE SPRING5_MEMBER
+ 		<set>
+	      	MEMBERNAME = #{membername}
+	      	, EMAIL = #{email}
+	      	, PHONE = #{phone}
+	      	, ADDRESS = #{address}
+	      	<if test="memberpw != null and memberpw!=''">
+	   		, MEMBERPW = #{memberpw}
+      		</if>
+    	</set>
+    	WHERE MEMBERID = #{memberid}
+ 	</update>
+ </mapper>

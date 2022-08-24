@@ -1,0 +1,16 @@
+package net.softsociety.web.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class IdcheckServiceImpl implements IdcheckService {
+	
+	@Autowired
+	
+	@Override
+	public int countMemberid(String memberid) {
+		return 0;
+	}
+
+}

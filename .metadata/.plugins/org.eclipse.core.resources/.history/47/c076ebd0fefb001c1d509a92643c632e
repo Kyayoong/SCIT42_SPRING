@@ -1,0 +1,20 @@
+package net.softsociety.spring2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import net.softsociety.spring2.vo.PersonVO;
+
+@Controller
+public class ModelController {
+	//이 메소드 안에서 만들어진 변수들을 view1으로 넘기려면...? model이라는 객체로 보내야한다.
+	@GetMapping("model/model1")
+	public String model1(Model model) {
+		String str = "문자열";
+		int num = 12345;
+		PersonVO person = new PersonVO("홍길동", "KT", "010-1111-1111");
+		
+		return "view1";
+	}
+}

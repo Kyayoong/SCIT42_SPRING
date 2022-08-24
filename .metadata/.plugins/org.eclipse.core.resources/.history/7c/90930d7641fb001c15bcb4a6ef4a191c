@@ -1,0 +1,5 @@
+package net.softsociety.spring2.vo;
+
+public class PersonVO {
+
+}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+    <typeInfo handle="=spring4/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.softsociety.spring4.service{GuestbookService.java[GuestbookService" modifiers="513" timestamp="1658190726618"/>
+    <typeInfo handle="=subject1/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.softsociety.subject1.service{ShoppingService.java[ShoppingService" modifiers="513" timestamp="1658308003811"/>
+    <typeInfo handle="=spring5/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.softsociety.spring5.service{MemberService.java[MemberService" modifiers="513" timestamp="1658798467017"/>
+    <typeInfo handle="=spring5/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.softsociety.spring5.service{BoardService.java[BoardService" modifiers="513" timestamp="1659580075077"/>
+    <typeInfo handle="=bluemarble/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.scit.bluemarble.service{bluemarbleService.java[bluemarbleService" modifiers="513" timestamp="1660270815502"/>
+    <typeInfo handle="=web/src\/main\/java=/gradle_scope=/main=/=/gradle_used_by_scope=/main,test=/&lt;net.softsociety.web.service{CommentService.java[CommentService" modifiers="513" timestamp="1660869326626"/>
+    <typeInfo handle="=web/C:\/Program Files\/Java\/jdk1.8.0_321\/jre\/lib\/rt.jar=/javadoc_location=/https:\/\/docs.oracle.com\/javase\/8\/docs\/api\/=/&lt;javax.xml.stream.events(Comment.class[Comment" modifiers="1537" timestamp="1647910903577"/>
+</typeInfoHistroy>

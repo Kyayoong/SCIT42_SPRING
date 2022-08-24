@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('*').css('margin', '20 auto');
+
+})
+</script>
+</head>
+<body>
+
+<h2>아이디 중복 체크</h2>
+
+<form action="join" method="post">
+	<p>ID <input type="text" id="memberid"><span id="msg"></span></p>
+	<p>이름 <input type="text" id="name" required="required"></p>
+	<p><input type="submit" value="가입" id="submitButton" disabled="disabled"></p>
+</form>
+
+</body>
+</html>

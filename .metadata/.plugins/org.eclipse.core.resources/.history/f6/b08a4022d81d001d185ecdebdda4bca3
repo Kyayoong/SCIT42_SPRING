@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="net.softsociety.web.dao.BoardDAO">
+ 	<select id="getCntBoard" parameterType="int" resultType="int">
+ 	SELECT CNT FROM WEB_RECOMMEND WHERE BOARDNUM = #{boardnum}
+ 	</select>
+ 	
+ 	<update id="updateCnt" parameterType="int">
+ 	UPDATE WEB_RECOMMEND SET CNT = CNT + 1 WHERE BOARDNUM = 1;
+ 	</update>
+ </mapper>
+ 

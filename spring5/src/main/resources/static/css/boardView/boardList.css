@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+div.container{
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 10px;
+    border: 1px solid black
+}
+
+div.title {
+	width: 800px;
+	margin: 0 auto;
+	border: 1px dashed black;
+}
+
+div.navigator{
+	width: 800px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+p{
+	margin-top: 10px;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+table.boardList{
+	margin: 10px auto 10px auto;
+	width: 900px;
+}
+
+th {
+	background-color: lightgray;
+}
+
+th.title{
+	width: 500px;
+}
+
+td.tdtitle{
+	text-align:left;
+}
+
+input[type="button"]{
+	height:30px;
+	width: 80px;
+	color: white;
+	background-color: black; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+input[type="button"]:hover{
+	height:30px;
+	width: 80px;
+	color: black;
+	background-color: gray; 
+	border: none;
+	border-radius: 10rem;
+	font-weight: 700;
+}
+
+div.quickMenu {
+	border: 1px dashed black;
+	text-align: center;
+	width: 150px;
+	height: 200px;
+	background-color: lightgray;
+   	position: fixed; /* 기준점 : 전체 모니터를 기준으로 해당 위치에 고정시킴. ==> 스크롤해도 그 위치로 따라온다. */
+    bottom: 400px;
+    right: 100px;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thmeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/boardView/boardList.css}">
+<script type="text/javascript">
+function pagingFormSubmit(currentPage){
+	let form = document.getElementById("pagingForm");
+	let page = document.getElementById("page");
+
+	// 전달 받은 페이지 번호를 저장
+	page.value = currentPage;
+
+	// 폼 전송 시, page, type, searchWord가 같이 넘어간다.
+	form.submit(); 
+}
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="title">
+		<h1>게시판</h1>
+	</div>
+	<!-- 이하 글 목록 출력 영역 -->
+	<table class="boardList">
+		<tr>
+			<!-- 상단 글 개수 메세지 변동 (검색x:전체, 검색o:검색 결과 -->
+			<td colspan="4" class="tdtitle">
+				<p th:if="${flag} == 0">전체 : <span th:text="${navi.totalRecordsCount}"></span></p>
+				<p th:if="${flag} == 1">검색 결과 : [[${list.size()}]]</p>
+			</td>
+			<!-- 로그인한 사람만 글 쓰기... -->
+			<td sec:authorize="isAuthenticated()">
+				<input type="button" value="글쓰기" onclick="location.href='/spring5/board/write'">
+			</td>
+		</tr>
+		<tr>
+			<th>글 번호</th>
+			<th class="title">제목</th>
+			<th>작성자</th>
+			<th>조회수</th>
+			<th>작성일</th>
+		</tr>
+		<tr th:each="board:${list}">
+			<td th:text="${board.boardnum}">글 번호</td>
+			<td>
+				<a th:text="${board.title}" th:href="@{/board/read(boardnum=${board.boardnum})}">제목</a><!-- read경로 뒤에 ()를 붙혀 parameter을 보낼 수 있다. -->
+			</td>
+			<!--<td th:text="${board.title}" class="tdtitle">제목</td>-->
+			<td th:text="${board.memberid}">작성자</td>
+			<td th:text="${board.hits}">조회수</td>
+			<td th:text="${board.inputdate}">작성일</td>
+		</tr>
+	</table>
+
+<!-- 검색 및 페이징 기능 -->
+<section>
+	<div class="navigator">
+		<div>
+			<a th:href="|javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})|">◁◁</a>
+			<a th:href="|javascript:pagingFormSubmit(${navi.currentPage - 1})|">◀</a> 
+			<!-- th:block은 없어지는 태그이기 때문에 <b></b>사이에 이상한게 있다고 해도, 없어지는 부분이라 문제 없음. -->
+			<span th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}"> 
+				<th:block th:if="${counter == navi.currentPage}"><b></th:block>
+			<a th:text="${counter}" th:href="|javascript:pagingFormSubmit(${counter})|"></a>&nbsp;
+				<th:block th:if="${counter == navi.currentPage}"></b></th:block>
+			</span>
+			
+			<a th:href="|javascript:pagingFormSubmit(${navi.currentPage + 1})|">▶</a>
+			<a th:href="|javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})|">▷▷</a> 
+		</div>
+		
+		<form id="pagingForm" th:action="@{/board/list}" method="get">
+			<!-- 페이지 번호는 히든으로 넣어 둔다. -->
+			<input type="hidden" name="page" id="page">
+					
+			<select name="type" id="type">
+				<option value="all" th:selected="${type} == 'all'">전체</option>
+				<option value="title" th:selected="${type} == 'title'">제목</option>
+				<option value="contents" th:selected="${type} == 'contents'">본문</option>
+				<option value="memberid" th:selected="${type} == 'memberid'">작성자</option>
+			</select>
+			<input type="text" name="searchWord" th:value="${searchWord}"> <!-- 검색 했을 때, 검색어 남기기. -->
+			<input type="button" value="검색" onclick="pagingFormSubmit(1)">
+		</form>
+	</div>
+	<br>
+</section>
+</div>
+
+
+<!-- 퀵메뉴 넣고 누구나 홈화면으로 가기 가능 -->
+<div class="quickMenu">
+	<p>[Quick Menu]</p>
+	<p><input type="button" value="HOME" onclick="location.href='/spring5'"></p>
+	<p sec:authorize="isAuthenticated()"><input type="button" value="logout" onclick="location.href='/spring5/logout'"></p>
+	<p sec:authorize="isAnonymous()"><input type="button" value="login" onclick="location.href='/spring5/member/loginForm'"></p>
+</div>
+</body>
+</html>

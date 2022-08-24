@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thmeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/memberView/myPage.css}">
+<script type="text/javascript">
+function validation(){
+	let pw1 = document.getElementById("memberpw");
+	let pw2 = document.getElementById("memberpw2");
+	let name = document.getElementById("name");
+	let email = document.getElementById("email");
+	let phone = document.getElementById("phone");
+	let address = document.getElementById("address");
+	let form = document.getElementById("myPageForm");
+	
+	if((pw1.value != '' || pw2.value != '') && pw1.value != pw2.value){
+		alert("비밀번호 오류!");
+		return false;
+	} else {
+		return true;
+	}
+	
+	if(name.value == ''){
+		alert("이름을 입력하세요.");
+		return false;
+	}
+	
+	if(email.value == ''){
+		alert("이메일을 입력하세요.");
+		return false;
+	}
+	
+	if(phone.value == ''){
+		alert("전화번호를 입력하세요.");
+		return false;
+	}
+	
+	if(address.value == ''){
+		alert("주소를 입력하세요.");
+		return false;
+	}
+	
+}
+
+function backToMenu(){
+	let 
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+	<h2>회원 가입</h2>
+	
+	<form action="mypage" method="post" id="myPageForm" onsubmit="return validation()">
+		<table class="signup" border=1>
+			<tr>
+				<th><label for="memberid">아이디</label></th>
+				<td>
+					<!-- 중복확인 아이디 입력 안되고 중복확인을 새로운 창으로 열어 거기서 입력받기. -->
+					<input id="memberid" type="text" name="memberid" maxlength="10" th:value="${member.memberid}" readonly="readonly">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="memberpw">새 비밀번호 입력</label></th>
+				<td>
+					<input id="memberpw" type="password" name="memberpw" placeholder="새로운 비밀번호">
+				</td>
+			</tr>
+			<tr>
+				<th><label for="memberpw2">새 비밀번호 재입력</label></th>
+				<td>
+					<input id="memberpw2" type="password" name="memberpw2"  placeholder="새로운 비밀번호 재입력">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="membername">이름</label></th>
+				<td>
+					<input id="mambername" type="text" name="membername" maxlength="10" th:value="${member.membername}">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="email">이메일</label></th>
+				<td>
+					<input id="email" type="email" name="email" maxlength="30" th:value="${member.email}">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="phone">전화번호</label></th>
+				<td>
+					<input id="phone" type="text" name="phone" maxlength="11" th:value="${member.phone}">
+				</td>
+			</tr>
+			
+			<tr>
+				<th><label for="address">주소</label></th>
+				<td>
+					<input id="address" type="text" name="address" th:value="${member.address}">
+				</td>
+			</tr>
+			
+			<tr>
+            <th colspan="2">
+                <input type="submit" value="전송">&nbsp;
+                <input type="button" value="이전으로" onclick="location.href='/spring5'">&nbsp;
+            </th>
+        	</tr>
+		</table>
+	</form>
+</div>
+<!-- 퀵메뉴 넣고 누구나 홈화면으로 가기 가능 -->
+<div class="quickMenu">
+	<p>[Quick Menu]</p>
+	<p><input type="button" value="HOME" onclick="location.href='/spring5'"></p>
+	<p sec:authorize="isAuthenticated()"><input type="button" value="logout" onclick="location.href='/spring5/logout'"></p>
+	<p sec:authorize="isAnonymous()"><input type="button" value="login" onclick="location.href='/spring5/member/loginForm'"></p>
+</div>
+</body>
+</html>

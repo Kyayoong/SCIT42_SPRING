@@ -1,0 +1,17 @@
+package net.softsociety.spring2.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import net.softsociety.spring2.vo.PersonVO;
+
+@Controller
+public class ModelController {
+	@GetMapping("model/model1")
+	public String model1() {
+		String str = "문자열";
+		int num = 12345;
+		PersonVO person = new PersonVO("홍길동", "KT", "010-1111-1111");
+		return "view1";
+	}
+}

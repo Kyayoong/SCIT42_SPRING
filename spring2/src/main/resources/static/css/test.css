@@ -1,0 +1,7 @@
+@charset "UTF-8";
+div.container {
+	width: 800px;
+	margin : 0 auto;
+	border : 1px solid black;
+	padding : 0 10px;
+}

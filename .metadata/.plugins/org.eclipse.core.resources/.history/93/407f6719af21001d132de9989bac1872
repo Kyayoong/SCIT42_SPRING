@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('*').css('margin', '20 auto');
+    
+    /*-----------------------------------------------*
+     * input tag의 변화 감지 방법
+     *  1. change() : 인풋박스에 값입력 후 떠나는 순간 감지
+     *  2. keyup() : 사용하면 입력하는 순간 변화를 감지
+     *  3. on()
+     *-----------------------------------------------*/
+     
+    /* $('#submitButton').attr('disabled', false); */
+    $('#memberid').keyup(idValidation);
+     
+})
+
+let id = null;
+function idValidation(){
+	let id = $(this).val();
+	
+	if(id.lenght < 3 || id.length > 10){
+		$('#msg').html('Id는 3~10자로 입력 하세요.');
+		$('#submitButton').attr('disabled', false);
+	}
+	
+	$.ajax({
+        url: 'idValidation',
+        method: 'post',
+        data: {memberid : id},
+        success: function(n){
+            if(n == 0){
+                $('#msg').html('');
+                $('#submitButton').attr('disabled', false);
+            } else {
+            	$('#msg').html('이미 사용중인 ID입니다.');
+            	$('#submitButton').attr('disabled', true);
+            }
+
+        }
+    })
+}
+</script>
+</head>
+<body>
+
+<h2>아이디 중복 체크</h2>
+
+<form action="join" method="post">
+	<p>ID <input type="text" id="memberid"><span id="msg"></span></p>
+	<p>이름 <input type="text" id="name" required="required"></p>
+	<p><input type="submit" value="가입" id="submitButton" disabled="disabled"></p>
+</form>
+
+</body>
+</html>

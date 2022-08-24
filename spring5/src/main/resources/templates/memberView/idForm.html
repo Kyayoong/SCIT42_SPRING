@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thmeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/memberView/idForm.css}">
+<script type="text/javascript">
+function validation(){
+	let id = document.getElementById("id");
+	
+	if(id.value){
+		return true;
+	}
+	
+	return true;
+}
+function inputId(searchId){
+	//opener를 이용해 자신을 열어준 창에 개입한다.
+	//이전 창의 memberid부분에 searchId를 저장한다.
+	opener.document.getElementById('memberid').value = searchId;
+	this.close();
+}
+</script>
+</head>
+<body>
+<div class="container">
+	<h1>중복 확인</h1>
+	<!-- 검색하기 전에 입력하는 상황 -->
+	<form action="idcheck" method="post" onsubmit="return validation()">
+	<table>
+		<tr>
+			<th>
+			<input type="text" name="searchId" id="searchId" placeholder="3~10글자의 아이디 입력">
+			<input type="submit" value="검색">
+			</th>
+		</tr>
+	</table>
+	</form>
+	
+	<!-- searchId가 있을 때만 나타난다 (검색 후) -->
+	<div th:if="${searchId != null} and ${searchId.length != 0}">
+		<div th:if="${result}">
+			<p><span th:text="${searchId}"></span>은(는) 사용할 수 있는 아이디입니다.</p>
+			<!-- 버튼을 누르면 열어준 창으로 돌아가 해당 아이디를 자동으로 넣어준다. -->
+			<p><input type="button" value="아이디 사용하기" th:searchId="${searchId}" onclick="inputId(this.getAttribute('searchId'))"></p>
+		</div>
+		<div th:if="${not result}">
+			<p><span th:text="${searchId}"></span>은(는) 이미 사용중인 아이디입니다.</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

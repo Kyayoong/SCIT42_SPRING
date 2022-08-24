@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../static/css/test.css" th:href="@{/css/test.css}">
+<script src="../../static/js/test.js" th:src="@{/js/test.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<h2>[ Thymeleaf 문법2 ]</h2>
+		<h3>문자열</h3>
+		<p th:text="${str + 'abcd'}">기본값</p>
+		<p th:text="|${str}abcd 1234|">기본값</p>
+		<p th:text="${str == '모코모코'}">기본값</p>
+		<p th:text="${str != '모코모코'}">기본값</p>
+		<p th:text="${#strings.isEmpty(str)}">빈 문자열인지</p>
+		<p th:text="${#strings.substring(str, 1, 2)}">부분 문자열</p>
+		<p th:text="${#strings.startsWith(str, '모')}">문자열 시작 글자</p>
+		<p th:text="${values}">기본값</p>
+		<p th:text="${#strings.listSplit(values, ',')}">문자열 분리</p>
+		<p th:text="${#strings.listSplit(values, ',')[0]}">문자열 분리 후 하나만 출력</p>
+		
+		<hr>
+		
+		<h3>리스트와 맵</h3>
+		<p th:text="${list}">기본값</p>
+		<p th:text="${#lists.size(list)}">사이즈</p>
+		<p th:text="${list.isEmpty()}">비었는가</p>
+		<p th:text="${#lists.contains(list, 'aaa')}">특정 내용이 있는가</p>
+		
+		<p th:text="${map}">기본값</p>
+		<p th:text="${#maps.size(map)}">사이즈</p>
+		<p th:text="${map.containsKey('name')}">해당 키값이 있는가</p>
+		
+		<hr>
+		
+		<h3>제어문</h3>
+		<div th:if="${str == '모코모코'}">true인 경우 보이는 부분</div>
+		<div th:unless="${str == '모코모코'}">false인 경우 보이는 부분</div>
+		
+		<div th:switch="${num}">
+			<p th:case="1">num은 1입니다.</p>
+			<p th:case="2">num은 2입니다.</p>
+			<p th:case="3">num은 3입니다.</p>
+			<p th:case="*">몰루</p>
+		</div>
+		
+		<hr>
+		
+		<h3>반복문</h3>
+		
+		<table style="border : 1px solid black">
+      		<tr>
+         		<td th:each="item : ${list}" th:text="${item}"></td>
+      		</tr>
+   		</table>
+		
+	    <table style="border : 1px solid black">
+	      	<tr th:each = "item: ${map}">
+	         	<th th:text="${item.key}"></th>
+	         	<th th:text="${item.value}"></th>
+	    	</tr>
+	    </table>
+
+	</div>
+</body>
+</html>

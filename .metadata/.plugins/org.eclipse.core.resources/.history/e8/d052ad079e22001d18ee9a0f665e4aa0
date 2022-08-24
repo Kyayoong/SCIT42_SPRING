@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:src="@{/js/jquery-3.6.0.js}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.table').css('text-align', 'center');
+	$('#title').css('width', '500px');
+	$('.container').css('border', '1px solid black');
+	$('.container').css('width', '650px');
+})
+
+</script>
+</head>
+<body>
+	<h1>[ 판매글 등록 ]</h1>
+	
+
+	<form action="writeBoard" method="post" id="write" onsubmit="return validation()" enctype="multipart/form-data">
+		<table class="writeForm">
+			<tr>
+				<th>
+					<label for="category">카테고리</label>
+				</th>
+				<td>
+					<input type="text" name="category" id="category">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="title">제목</label>
+				</th>
+				<td>
+					<input type="text" name="title" id="title">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="contents">내용</label>
+				</th>
+				<td>
+					<textarea id="contents" name="contents" rows="20" cols="69"></textarea>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" class="btn">
+					<input type="submit" value="저장">&nbsp;
+					<input type="button" value="이전으로" onclick="location.href='/spring5/board/list'">&nbsp;
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	
+</body>
+</html>

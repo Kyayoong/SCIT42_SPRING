@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/details.css">
+<script type="text/javascript">
+function insertItemList(n) {
+	let p_num = document.getElementById('p_num');
+	let form = document.getElementById('insertForm');
+	
+	p_num.value = n;
+	form.submit();
+}
+</script>
+</head>
+<body>
+
+	<!-- 담기 버튼 눌렀을 때 넘길 폼 -->
+	<form th:action="@{/insertFav}" method="post" id="insertForm">
+		<input type="hidden" name="p_num" value="0" id="p_num">
+	</form>
+
+	<h1>제품 상세보기</h1>
+	
+	<div class="detailsContainer">	
+	<table>
+		<tr>
+			<th>제품번호</th>
+			<td th:text="${item.p_num}">제품번호</td>
+		</tr>
+		<tr>
+			<th>제품명</th>
+			<td th:text="${item.p_name}">제품명</td>
+		</tr>
+		<tr>
+			<th>수량</th>
+			<td th:text="${item.amount}">제품재고</td>
+		</tr>
+		<tr>
+			<th>가격</th>
+			<td th:text="${item.price}">제품가격</td>
+		</tr>
+		<tr>
+			<th>비고</th>
+			<td><input type="button" value="담기" th:num="${item.p_num}" onclick="insertItemList(this.getAttribute('num'))"></td>
+		</tr>
+	</table>
+	
+	<hr>
+	<div class="button">
+	<input type="button" value="홈화면" th:onclick="|location.href='@{/}'|">
+	<input type="button" value="쇼핑하기" th:onclick="|location.href='@{/shop}'|">
+	</div>
+	
+	</div>
+</body>
+</html>

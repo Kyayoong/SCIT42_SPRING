@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style th:inline="text">
+        /*.coor {*/
+        /*    background: url([[@{/images/hotel.png}]])*/
+        /*    no-repeat center center fixed;*/
+        /*}*/
+    </style>
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+    <script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+    <script>
+        $(document).ready(function() {
+        	/* 플레이어 정보에 마우스 올리면 나오는 창 이벤트 설정 */
+            $('#pl1').hover(visibleP1, hiddenP1);
+            $('#pl2').hover(visibleP2, hiddenP2);
+            $('#pl3').hover(visibleP3, hiddenP3);
+            $('#pl4').hover(visibleP4, hiddenP4);
+        })
+        function visibleP1(){
+            $('#playerInfo1').css('visibility', 'visible');
+        }
+        function hiddenP1(){
+            $('#playerInfo1').css('visibility', 'hidden');
+        }
+        function visibleP2(){
+            $('#playerInfo2').css('visibility', 'visible');
+        }
+        function hiddenP2(){
+            $('#playerInfo2').css('visibility', 'hidden');
+        }
+        function visibleP3(){
+            $('#playerInfo3').css('visibility', 'visible');
+        }
+        function hiddenP3(){
+            $('#playerInfo3').css('visibility', 'hidden');
+        }
+        function visibleP4(){
+            $('#playerInfo4').css('visibility', 'visible');
+        }
+        function hiddenP4(){
+            $('#playerInfo4').css('visibility', 'hidden');
+        }
+ 
+        window.onload = function() {
+            let dice = document.getElementById("dice");
+            let diceTrigger = document.getElementById("diceTrigger");
+            let top = 100;
+            let mousedown;
+            let mouseup;
+            dice.addEventListener('click', () => {
+
+            });
+
+
+            // 주사위 버튼 클릭시 게이지 차오르는 이벤트
+            dice.addEventListener('mousedown', () => {
+                clearInterval(mouseup);
+                mousedown = setInterval(() => {
+                    if (top >= 0) {
+                        top -= 1;
+                        diceTrigger.style.top = `${top}%`;
+                    }
+                }, 10);
+            });
+            // 주사위 버튼에서 손을 떼면 주사위 이벤트 트리거 혹은 게이지 떨어뜨리는 이벤트
+            dice.addEventListener('mouseup', () => {
+                clearInterval(mousedown);
+                mouseup = setInterval(() => {
+                    if (top <= 0) {
+                        //주사위 굴리는 이벤트 실행
+                        clearInterval(mouseup);
+                        return;
+                    }
+                    if (top <= 100) {
+                        top += 1;
+                        diceTrigger.style.top = `${top}%`;
+                    }
+                }, 10);
+            });
+        }
+    </script>
+</head>
+
+<body>
+	<!-- 맵구성 -->
+    <div class="board">
+    	<div class="tile">1</div>
+        <div class="tile">2
+            <div class="city-name">대만</div>
+            <div class="hotel"></div>
+            <div class="player-mark">
+                <span class="player-mark1"></span>
+                <span class="player-mark2"></span>
+                <span class="player-mark3"></span>
+                <span class="player-mark4"></span>
+            </div>
+        </div>
+        <div class="tile">3
+            <div class="city-name">행운의 열쇠</div>
+            <div class="player-mark">
+                <span class="player-mark1"></span>
+                <span class="player-mark2"></span>
+                <span class="player-mark3"></span>
+                <span class="player-mark4"></span>
+            </div>
+        </div>
+        <div class="tile">4
+        	<div class="city-name">홍콩</div>
+            <div class="hotel"></div>
+            <div class="player-mark">
+                <span class="player-mark1"></span>
+                <span class="player-mark2"></span>
+                <span class="player-mark3"></span>
+                <span class="player-mark4"></span>
+            </div>
+        </div>
+        <div class="tile">5</div>
+        <div class="tile">6</div>
+        <div class="tile">7
+            <div class="city-name">대만</div>
+            <div class="hotel"></div>
+        </div>
+        <div class="tile">8</div>
+        <div class="tile">9
+            <div class="city-name">대만</div>
+            <div class="hotel"></div>
+        </div>
+        <div class="tile">10</div>
+        <div class="tile">11</div>
+        <div class="tile">12</div>
+        <div class="tile">13</div>
+        <div class="tile">14</div>
+        <div class="tile">15</div>
+        <div class="tile">16</div>
+        <div class="tile">17
+            <div class="city-name">시드니</div>
+        </div>
+        <div class="tile">18</div>
+        <div class="tile">19</div>
+        <div class="tile">20</div>
+        <div class="tile">21</div>
+        <div class="tile">22
+            <div class="city-name">도쿄</div>
+        </div>
+        <div class="tile">23</div>
+        <div class="tile">24</div>
+        <div class="tile">25</div>
+        <div class="tile">26</div>
+        <div class="tile">27</div>
+        <div class="tile">28</div>
+        <div id="dice">
+            <input type="button" value="roll">
+            <div id="diceTrigger"></div>
+        </div>
+    </div>
+
+<!-- 플레이어 정보창 -->
+<div class="plStatusContainer">
+	<!-- 정보들은 innerHTML로 수정.-->
+	<div id="pl1">
+		<p th:text="|Name: ${player[0].playername}|">[Player1]</p>
+		<p th:text="|Cash: ${player[0].cash}|">Cash: </p>
+        <p>Rank: </p>
+        <p>플레이어 정보 창</p>
+	</div>
+	<div id="pl2">
+		<p th:text="|Name: ${player[1].playername}|">[Player1]</p>
+		<p th:text="|Cash: ${player[1].cash}|">Cash: </p>
+        <p>Rank: </p>
+        <p>플레이어 정보 창</p>
+	</div>
+	<div id="pl3">
+		<p th:text="|Name: ${player[2].playername}|">[Player1]</p>
+		<p th:text="|Cash: ${player[2].cash}|">Cash: </p>
+        <p>Rank: </p>
+        <p>플레이어 정보 창</p>
+	</div>
+	<div id="pl4">
+		<p th:text="|Name: ${player[3].playername}|">[Player1]</p>
+		<p th:text="|Cash: ${player[3].cash}|">Cash: </p>
+        <p>Rank: </p>
+        <p>플레이어 정보 창</p>
+	</div>
+</div>
+<!-- 숨어있는 정보창 화면 우측 플레이어 정보 마우스 오버시 나오는 창 -->
+<div id="playerInfo1">
+	<div>
+		<p>상세정보 창입니다.</p>
+		<p>건축물 상황, 돈, 턴 수, 등등 대다수의 정보가 출력됩니다.</p>
+		<p>보이나?</p>
+        <p><img th:src="@{/images/mokoko_young.png}" style="width:300px;"></p>
+	</div>
+</div>
+<div id="playerInfo2">
+	<div>
+		<p>상세정보 창입니다.</p>
+		<p>건축물 상황, 돈, 턴 수, 등등 대다수의 정보가 출력됩니다.</p>
+		<p>보이나?</p>
+		<p><img th:src="@{/images/mokoko01.jpg}" style="width:300px;"></p>
+	</div>
+</div>
+<div id="playerInfo3">
+	<div>
+		<p>상세정보 창입니다.</p>
+		<p>건축물 상황, 돈, 턴 수, 등등 대다수의 정보가 출력됩니다.</p>
+		<p>보이나?</p>
+		<p><img th:src="@{/images/mokoko05.png}" style="width:300px;"></p>
+	</div>
+</div>
+<div id="playerInfo4">
+	<div>
+		<p>상세정보 창입니다.</p>
+		<p>건축물 상황, 돈, 턴 수, 등등 대다수의 정보가 출력됩니다.</p>
+		<p>보이나?</p>
+		<p><img th:src="@{/images/mokoko09.png}" style="width:300px;"></p>
+	</div>
+</div>
+
+<!-- 상태메세지 창 -->
+<div class="statusContainer">
+	<textarea id="status" rows="10" cols="55" readonly="readonly">상태 메시지 창</textarea>
+</div>
+
+<!-- 채팅창 (임시) -->
+<!-- <div class="chatContainer">
+<textarea id="chatOutput" rows="10" cols="55" readonly="readonly">채팅창</textarea>
+<p>
+    <input type="text" id="chatInput">
+    <input type="button" id="chatBtn" value="입력">
+</p>
+</div> -->
+
+</body>
+</html>

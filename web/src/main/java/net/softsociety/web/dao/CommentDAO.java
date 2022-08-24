@@ -1,0 +1,16 @@
+package net.softsociety.web.dao;
+
+import java.util.ArrayList;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import net.softsociety.web.domain.Comment;
+
+@Mapper
+public interface CommentDAO {
+	public int insertComment(Comment comment);
+
+	public ArrayList<Comment> readAllComment();
+
+	public int deleteComment(int num);
+}

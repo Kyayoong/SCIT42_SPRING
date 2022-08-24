@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http//thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h1>[ Javascript / jQuerry / Ajax ]</h1>
+	<ol>
+		<li>Javascript
+			<ul>
+				<li><a th:href="@{/js/js1}">Javascript의 기본 문법</a></li>
+				<li><a th:href="@{/js/js2}">Javascript의 내장 객체</a></li>
+				<li><a th:href="@{/js/js3}">Javascript의 기타 함수</a></li>
+			</ul>
+		</li>
+		<li>jQuery
+			<ul>
+				<li><a th:href="@{/jq/jq1}">jQuery의 기본 문법, 선택자</a></li>
+				<li><a th:href="@{/jq/jq2}">jQuery의 이벤트 처리</a></li>
+				<li><a th:href="@{/jq/jq3}">jQuery의 문서 객체 조작 메소드</a></li>
+				<li><a th:href="@{/jq/jq4}">jQuery의 배열과 each()</a></li>
+				<li><a th:href="@{/jq/jq5}">[예제1]jQuery의 예제</a></li>
+				<li><a th:href="@{/jq/jq6}">jQuery의 효과</a></li>
+				<br>
+				<li><a th:href="@{/jq/calc1}">[예제2] 계산기1</a></li>
+				<li><a th:href="@{/jq/calc2}">[예제3] 계산기2</a></li>
+			</ul>
+		</li>
+		<li>Ajax
+			<ul>
+				<li><a th:href="@{/aj/aj1}">Ajax 요청과 응답</a></li>
+				<li><a th:href="@{/aj/aj2}">Ajax 객체 보내고 받기</a></li>
+				<li><a th:href="|@{/aj/recommend(boardnum=${boardnum})}">[예제2] Ajax로 추천수 올리기</a></li>
+				<li><a th:href="|@{/aj/comment(boardnum=${boardnum})}">[예제3] Ajax로 댓글 올리기</a></li>
+			</ul>
+		</li>
+	</ol>
+</body>
+</html>

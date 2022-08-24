@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    
+    //페이지 켜졌을 때부터, 버튼에 기능을 부여하기 위해 ready에서 호출
+    $('#bt1').on('click', button1Click); //여기서 버튼 클릭 함수 뒤에 괄호를 붙히면 클릭 안해도 무조건 실행됨.
+    //$('#bt1').click(button1Click); 위에거랑 동일함. 이건 클릭 했을때, 무슨 함수(함수부분이 변화)...? 위에건 함수를 실행하기위해 무슨동작(click부분이 변화)?
+
+    //버튼1의 이벤트 취소
+    $('#bt2').on('click', button1Off);
+
+    //버튼1의 이벤트 강제 발생
+    $('#bt3').on('click', button1Trigger);
+    
+    //img에 마우스 포인터가 올라가면 실행되는 코드
+    $('#img1').on('mouseenter', img1Enter);	//mouseleave, mousedown 등등 다양함.
+    
+    //키보드 이벤트
+    $('#text1').on('keyup', text1Keyup);
+})
+
+function button1Click(){
+    alert('버튼1 클릭함');
+}
+function button1Off(){
+    $('#bt1').off('click', button1Click); //클릭 시 발생하는 이벤트 중 해당 함수만 취소
+    //$('#bt1').off('click');               //클릭 시 발생하는 이벤트를 모두 취소
+    //$('#bt1').off();                      //해당 버튼에 걸린 모든 이벤트 모두 취소
+}
+function button1Trigger(){
+    $('#bt1').trigger('click');         //사용자는 안눌렀는데 버튼 1이 눌린거가 됨.
+}
+function img1Enter(){
+	alert('이미지의 mouseEnter 이벤트');
+}
+function text1Keyup(){
+    alert('텍스트 필드의 keyup 이벤트')
+}
+</script>
+</head>
+<body>
+<h2>[ jQuery의 이벤트 처리 ]</h2>
+<pre>
+    on() - 이벤트 등록, 
+    off() - 이벤트 끄기, 
+    trigger() - 이벤트 강제 시작
+</pre>
+
+<p><input type="button" id="bt1" value="버튼1"></p>
+<p><input type="button" id="bt2" value="버튼1의 이벤트 취소"></p>
+<p><input type="button" id="bt3" value="버튼1의 이벤트 강제 발생"></p>
+
+<p><img th:src="@{/image/mokoko_young.png}" id="img1"></p>
+
+<p><input type="text" id="text1" value="입력하세요"></p>
+</body>
+</html>

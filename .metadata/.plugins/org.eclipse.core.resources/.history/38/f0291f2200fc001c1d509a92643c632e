@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>모델1</title>
+</head>
+<body>
+	<h2>[ Model 사용하기 ]</h2>
+	<p>[[${string}]]</p>
+	<p>[[${aaa}]]</p>
+	
+</body>
+</html>

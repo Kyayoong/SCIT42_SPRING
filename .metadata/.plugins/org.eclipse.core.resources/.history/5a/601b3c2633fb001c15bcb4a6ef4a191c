@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>[ GET method로 parameter 전달하기 ] </h1>
+	<form action="" method="">
+		<p>이름<input id="name" type="text" name="name" placeholder="이름을 입력하세요."></p>
+		<p>전화</p>
+		<input id="phone" type="tel" name="phone" placeholder="전화번호를 입력하세요.">
+	</form>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- <script src="../js/jquery-3.6.0.min.js"></script> 상대경로 -->
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script>
+//jq를 쓸때의 window.onload. 시작하자마자 적용시킬 것들
+$(document).ready(function() {
+    // alert('jQuery 실행.');
+    //전체선택자
+    $('*').css('text-align', 'center');
+    $('*').css('margin', '20 auto');
+
+	//입장시 불러온다
+	init();
+	// 입력버튼 클릭 시, 서버로 정보를 보낸다.
+	$('#bt').click(insertComment);
+})
+
+function insertComment(){
+	let name = $('#name').val();
+	let text = $('#text').val();
+	let func = init();
+	if(name == '' || text == ''){
+		alert('이름과 내용을 입력하세요.');
+		return;
+	}
+	//id가 name, text인 요소에서 입력한 값을 불러온다.
+	//서버로 보낸다.
+	$.ajax({
+		url: 'insert',
+		type: 'post',
+		data: {name: name, text: text},
+		success: function(){
+			alert('저장되었습니다.');
+			$('#name').val('');
+			$('#text').val('');
+			init();
+		},
+		error: function(e){
+			alert(JSON.stringify(e));
+		}
+	})
+}
+function init(){
+	//일단 서버에서 목록을 불러오기 (초기 설정)
+	$.ajax({
+		url: 'read',
+		type: 'get',
+		dataType: 'json',
+		success: output, /* output()은 언제나 무조건 실행이기 때문에... ()를 뺀다. */
+		error: function(e){
+			alert(JSON.stringify(e));
+		}
+	})
+}
+/*-----------------------------------------------------*
+ * json으로 넘어온 정보를 가져와서 output에 출력한다			   *
+ *-----------------------------------------------------*/
+let table = null;
+function output(msg){
+	table = '<table style="border:1; margin: 0 auto; background-color: lightgray;"><tr>';
+	table += '<th>댓글번호</th>';
+	table += '<th>이름</th>';
+	table += '<th>내용</th>';
+	table += '<th>삭제버튼</th></tr>';
+	$.each(msg, function(i, list){
+		table += '<tr>';
+		table += '<td>' + list.num + '</td>';
+		table += '<td>' + list.name + '</td>';
+		table += '<td>' + list.text + '</td>';
+		/* -----------------------------------------------------------------------------------------------------------*
+		 * 삭제버튼에 어느 댓글의 삭제버튼인지 알려주기 위해 num속성을 넣어준다. btnDel을 class로 주는 이유: 반복문으로 생성되면 id의 경우 중복되어버림. 
+		 * id로 주려면 'id="btnDel'+ list.num + '"' 이런식으로 달라지는 요소를 주어야한다.
+		 * -----------------------------------------------------------------------------------------------------------*/
+		table += '<td>' + '<input type="button" value="삭제" class="btnDel" num="' + list.num + '"></td>';
+		table += '</tr>';
+	})
+	table += '</table>';
+	
+	/* 목록에 출력하는 부분 */
+	$('#output').html(table);
+	
+	/* 삭제버튼 클릭 시의 이벤트 */
+	$('.btnDel').on('click', commentDel);	
+	
+}
+
+/*-----------------------------------------------------*
+ * 삭제 버튼 클릭 시, 실행되는 함수							   *
+ *-----------------------------------------------------*/
+ function commentDel(){
+	let num = $(this).attr('num');
+	//현재 클릭한 버튼의 댓글 번호를 서버로 보내어 삭제한다.
+	$.ajax({
+		url: 'deleteComment',
+		type: 'post',
+		data: {num : num},
+		/* ------------------------------------------------------------------------------------------------------------*
+		 * 여기선 괄호가 없는 이유: success시 이 함수를 실행한다고 알려주는 것이라서 ()가 빠진다.
+		 * 대신 function(){alert(); init()} 이런 경우, success시 해당 function을 실행하는데, 그 안에 init을 실행해야하기 때문에 ()를 붙힌다.
+		 * 콜백함수....!!
+		 * ------------------------------------------------------------------------------------------------------------*/
+		success: init,
+		error: function(e){
+			alert(JSON.stringify(e));
+		}
+	})
+}
+</script>
+</head>
+<body>
+
+<h2>[ 예제3 ] Ajax로 댓글 올리고 보여주기</h2>
+
+<div>
+	<!-- 사실 폼은 필요없지만 형식상 써보자 -->
+	<form>
+		이름 <input type="text" id="name">
+		내용 <input type="text" id="text">
+		<input type="button" id="bt" value="저장">
+	</form>
+</div>
+<div id="output">
+</div>
+</body>
+</html>
